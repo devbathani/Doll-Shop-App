@@ -1,38 +1,21 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:shop_app/screens/loginscreen.dart';
+import 'package:shop_app/screens/shopscreen.dart';
 
 class Homescreen extends StatefulWidget {
   const Homescreen({Key? key}) : super(key: key);
 
   @override
-  State<Homescreen> createState() => _HomescreenState();
+  _HomescreenState createState() => _HomescreenState();
 }
 
-class _HomescreenState extends State<Homescreen>
-    with SingleTickerProviderStateMixin {
-  late AnimationController animationController;
-
-  @override
-  void initState() {
-    super.initState();
-    animationController = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 1000));
-    animationController.forward();
-  }
-
-  @override
-  void dispose() {
-    animationController.dispose();
-    super.dispose();
-  }
-
+class _HomescreenState extends State<Homescreen> {
   @override
   Widget build(BuildContext context) {
-    var h = MediaQuery.of(context).size.height;
-    var w = MediaQuery.of(context).size.width;
-
     return Scaffold(
       body: Container(
+        height: double.infinity,
         width: double.infinity,
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -44,33 +27,23 @@ class _HomescreenState extends State<Homescreen>
             end: Alignment.bottomCenter,
           ),
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: EdgeInsets.symmetric(
-                  vertical: h * 0.20, horizontal: w * 0.10),
-              child: SlideTransition(
-                position: Tween<Offset>(
-                  begin: const Offset(0, 0.7),
-                  end: const Offset(0, 0.2),
-                ).animate(animationController),
-                child: FadeTransition(
-                  opacity: animationController,
-                  child: Text(
-                    "Welcome",
-                    style: GoogleFonts.poppins(
-                      textStyle: TextStyle(
-                        color: Colors.white,
-                        fontSize: w / 10,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
+        child: StreamBuilder(
+          stream: FirebaseAuth.instance.authStateChanges(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(
+                child: CircularProgressIndicator(
+                  color: Colors.white,
                 ),
-              ),
-            )
-          ],
+              );
+            } else if (snapshot.hasData) {
+              return const Shopscreen();
+            } else if (snapshot.hasError) {
+              return const Text("Something went wrong !!");
+            } else {
+              return const Loginscreen();
+            }
+          },
         ),
       ),
     );
