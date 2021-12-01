@@ -1,8 +1,13 @@
+import 'dart:ffi';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:shop_app/provider/google_sigin_provider.dart';
+import 'package:shop_app/screens/loginscreen.dart';
+import 'package:shop_app/usermodel/user_model.dart';
 
 class Shopscreen extends StatefulWidget {
   const Shopscreen({Key? key}) : super(key: key);
@@ -12,7 +17,29 @@ class Shopscreen extends StatefulWidget {
 }
 
 class _ShopscreenState extends State<Shopscreen> {
-  final user = FirebaseAuth.instance.currentUser!;
+  User? user = FirebaseAuth.instance.currentUser;
+
+  Usermodel usermodel = Usermodel();
+
+  @override
+  void initState() {
+    FirebaseFirestore.instance
+        .collection("user_name")
+        .doc(user!.uid)
+        .get()
+        .then((value) {
+      usermodel = Usermodel.fromMap(value.data());
+      setState(() {});
+    });
+
+    super.initState();
+  }
+
+  Future<void> logout(BuildContext context) async {
+    await FirebaseAuth.instance.signOut();
+    Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => const Loginscreen()));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +69,7 @@ class _ShopscreenState extends State<Shopscreen> {
                 children: [
                   CircleAvatar(
                     radius: 20,
-                    backgroundImage: NetworkImage(user.photoURL!),
+                    //backgroundImage: NetworkImage(user.currentUser!.photoURL!),
                   ),
                 ],
               ),
@@ -53,11 +80,11 @@ class _ShopscreenState extends State<Shopscreen> {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: w * 0.08),
               child: Text(
-                user.email!,
+                "${usermodel.username}   ${usermodel.phonenumber}",
                 style: GoogleFonts.roboto(
                   textStyle: TextStyle(
                     color: Colors.white,
-                    fontSize: w / 15,
+                    fontSize: w / 20,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -68,9 +95,7 @@ class _ShopscreenState extends State<Shopscreen> {
             ),
             GestureDetector(
               onTap: () {
-                final provider =
-                    Provider.of<GoogleSignInProvider>(context, listen: false);
-                provider.logout();
+                logout(context);
               },
               child: Container(
                 height: h * 0.07,

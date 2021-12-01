@@ -1,7 +1,12 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:shop_app/provider/google_sigin_provider.dart';
+import 'package:shop_app/screens/signupscreen.dart';
+
+import 'homescreen.dart';
 
 class Loginscreen extends StatefulWidget {
   const Loginscreen({Key? key}) : super(key: key);
@@ -29,6 +34,27 @@ class _LoginscreenState extends State<Loginscreen>
   }
 
   final GlobalKey<FormState> _form = GlobalKey<FormState>();
+  final auth = FirebaseAuth.instance;
+
+  void userlogin(String useremail, String userpass) async {
+    if (_form.currentState!.validate()) {
+      await auth
+          .signInWithEmailAndPassword(email: useremail, password: userpass)
+          .then((userid) => {
+                Fluttertoast.showToast(msg: "Login Successful"),
+                Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: (context) => const Homescreen()))
+              })
+          .catchError((e) {
+        Fluttertoast.showToast(msg: "Enter a valid Userid");
+      });
+    }
+  }
+
+  final TextEditingController emailcontroller = TextEditingController();
+  final TextEditingController passwordcontroller = TextEditingController();
+
+  bool _passwordVisible = true;
 
   @override
   Widget build(BuildContext context) {
@@ -42,8 +68,8 @@ class _LoginscreenState extends State<Loginscreen>
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              Colors.blue.shade900,
               Colors.black,
+              Colors.blue.shade900,
             ],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
@@ -63,15 +89,33 @@ class _LoginscreenState extends State<Loginscreen>
                   ).animate(animationController),
                   child: FadeTransition(
                     opacity: animationController,
-                    child: Text(
-                      "Welcome",
-                      style: GoogleFonts.poppins(
-                        textStyle: TextStyle(
-                          color: Colors.white,
-                          fontSize: w / 10,
-                          fontWeight: FontWeight.bold,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Welcome to ",
+                          style: GoogleFonts.poppins(
+                            textStyle: TextStyle(
+                              color: Colors.white,
+                              fontSize: w / 15,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                         ),
-                      ),
+                        SizedBox(
+                          height: h * 0.01,
+                        ),
+                        Text(
+                          "INFINITY.LINKAGE",
+                          style: GoogleFonts.sora(
+                            textStyle: TextStyle(
+                              color: Colors.white,
+                              fontSize: w / 12.5,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        )
+                      ],
                     ),
                   ),
                 ),
@@ -88,24 +132,46 @@ class _LoginscreenState extends State<Loginscreen>
                       child: Padding(
                         padding: EdgeInsets.symmetric(horizontal: w * 0.08),
                         child: TextFormField(
+                          controller: emailcontroller,
+                          onSaved: (value) {
+                            emailcontroller.text = value!;
+                          },
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return "Email is required";
+                            }
+                            if (!RegExp(
+                                    r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                                .hasMatch(value)) {
+                              return 'Please enter a valid Email';
+                            }
+                            return null;
+                          },
                           keyboardType: TextInputType.name,
                           style: GoogleFonts.poppins(
                             textStyle: TextStyle(
                               color: Colors.white,
-                              fontSize: w / 20,
+                              fontSize: w / 22,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                           decoration: InputDecoration(
-                            prefixIcon: Icon(
-                              Icons.person,
-                              size: w / 18,
-                              color: Colors.grey,
+                            errorStyle: GoogleFonts.poppins(
+                              textStyle: TextStyle(
+                                color: Colors.red,
+                                fontSize: w / 30,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                            hintText: "Username",
+                            prefixIcon: Icon(
+                              Icons.email,
+                              size: w / 18,
+                              color: Colors.white,
+                            ),
+                            hintText: "Email",
                             hintStyle: GoogleFonts.poppins(
                               textStyle: TextStyle(
-                                  color: Colors.grey, fontSize: w / 20),
+                                  color: Colors.grey, fontSize: w / 23),
                             ),
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.all(
@@ -143,24 +209,59 @@ class _LoginscreenState extends State<Loginscreen>
                           padding: EdgeInsets.symmetric(horizontal: w * 0.08),
                           child: TextFormField(
                             keyboardType: TextInputType.visiblePassword,
-                            obscureText: true,
+                            obscureText: _passwordVisible,
                             style: GoogleFonts.poppins(
                               textStyle: TextStyle(
                                 color: Colors.white,
-                                fontSize: w / 20,
+                                fontSize: w / 22,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return "Password is required";
+                              }
+                              // if (!RegExp(
+                              //         r'^(?=.?[A-Z])(?=.?[a-z])(?=.?[0-9])(?=.?[!@#\$&*~]).{8,}$')
+                              //     .hasMatch(value)) {
+                              //   return 'Password must contain atleast one upper case, one lower case, one digit, one Specail Character and must be Must be at least 8 characters in length';
+                              // }
+                              if (value.length < 8) {
+                                return "Password must be atleast 8 characters long";
+                              }
+                              return null;
+                            },
+                            controller: passwordcontroller,
+                            onSaved: (value) {
+                              passwordcontroller.text = value!;
+                            },
                             decoration: InputDecoration(
+                              errorStyle: GoogleFonts.poppins(
+                                textStyle: TextStyle(
+                                  color: Colors.red,
+                                  fontSize: w / 30,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              suffixIcon: IconButton(
+                                icon: Icon(_passwordVisible
+                                    ? Icons.visibility
+                                    : Icons.visibility_off),
+                                onPressed: () {
+                                  setState(() {
+                                    _passwordVisible = !_passwordVisible;
+                                  });
+                                },
+                              ),
                               prefixIcon: Icon(
-                                Icons.lock,
+                                Icons.vpn_key_rounded,
                                 size: w / 18,
-                                color: Colors.grey,
+                                color: Colors.white,
                               ),
                               hintText: "Password",
                               hintStyle: GoogleFonts.poppins(
                                 textStyle: TextStyle(
-                                    color: Colors.grey, fontSize: w / 22),
+                                    color: Colors.grey, fontSize: w / 23),
                               ),
                               enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.all(
@@ -189,7 +290,7 @@ class _LoginscreenState extends State<Loginscreen>
                 ),
               ),
               SizedBox(
-                height: h * 0.06,
+                height: h * 0.08,
               ),
               SlideTransition(
                 position: Tween<Offset>(
@@ -200,35 +301,41 @@ class _LoginscreenState extends State<Loginscreen>
                   opacity: animationController,
                   child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: w * 0.35),
-                    child: Container(
-                      height: h * 0.07,
-                      width: w * 0.30,
-                      decoration: BoxDecoration(
-                        color: const Color(0xff072048),
-                        borderRadius: BorderRadius.circular(15),
-                        boxShadow: const [
-                          BoxShadow(
-                            color: Colors.black,
-                            offset: Offset(4.0, 4.0),
-                            blurRadius: 15.0,
-                            spreadRadius: 1.0,
+                    child: GestureDetector(
+                      onTap: () {
+                        userlogin(
+                            emailcontroller.text, passwordcontroller.text);
+                      },
+                      child: Container(
+                        height: h * 0.07,
+                        width: w * 0.30,
+                        decoration: BoxDecoration(
+                          color: const Color(0xff082b62),
+                          borderRadius: BorderRadius.circular(15),
+                          boxShadow: const [
+                            BoxShadow(
+                              color: Color(0xff093880),
+                              offset: Offset(4.0, 4.0),
+                              blurRadius: 15.0,
+                              spreadRadius: 1.0,
+                            ),
+                            BoxShadow(
+                              color: Color(0xff051631),
+                              offset: Offset(-4.0, -4.0),
+                              blurRadius: 15.0,
+                              spreadRadius: 1.0,
+                            ),
+                          ],
+                        ),
+                        child: Center(
+                          child: Text(
+                            "Login",
+                            style: GoogleFonts.roboto(
+                                textStyle: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: w / 18,
+                                    fontWeight: FontWeight.bold)),
                           ),
-                          BoxShadow(
-                            color: Color(0xff092f6d),
-                            offset: Offset(-4.0, -4.0),
-                            blurRadius: 15.0,
-                            spreadRadius: 1.0,
-                          ),
-                        ],
-                      ),
-                      child: Center(
-                        child: Text(
-                          "Login",
-                          style: GoogleFonts.roboto(
-                              textStyle: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: w / 18,
-                                  fontWeight: FontWeight.bold)),
                         ),
                       ),
                     ),
@@ -236,7 +343,7 @@ class _LoginscreenState extends State<Loginscreen>
                 ),
               ),
               SizedBox(
-                height: h * 0.20,
+                height: h * 0.18,
               ),
               SlideTransition(
                 position: Tween<Offset>(
@@ -272,13 +379,21 @@ class _LoginscreenState extends State<Loginscreen>
                         SizedBox(
                           width: w * 0.01,
                         ),
-                        Text(
-                          "SignUp",
-                          style: GoogleFonts.poppins(
-                            textStyle: TextStyle(
-                                color: Colors.white,
-                                fontSize: w / 20,
-                                fontWeight: FontWeight.bold),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const Signupscreen()));
+                          },
+                          child: Text(
+                            "SignUp",
+                            style: GoogleFonts.poppins(
+                              textStyle: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: w / 20,
+                                  fontWeight: FontWeight.bold),
+                            ),
                           ),
                         ),
                       ],
