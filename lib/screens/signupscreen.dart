@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shop_app/screens/homescreen.dart';
-import 'package:shop_app/usermodel/user_model.dart';
+import 'package:shop_app/model/user_model.dart';
 
 class Signupscreen extends StatefulWidget {
   const Signupscreen({Key? key}) : super(key: key);

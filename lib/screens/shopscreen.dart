@@ -4,8 +4,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shop_app/model/shop_model.dart';
 import 'package:shop_app/screens/loginscreen.dart';
-import 'package:shop_app/usermodel/user_model.dart';
+import 'package:shop_app/model/user_model.dart';
 
 class Shopscreen extends StatefulWidget {
   const Shopscreen({Key? key}) : super(key: key);
@@ -39,12 +40,19 @@ class _ShopscreenState extends State<Shopscreen> {
         MaterialPageRoute(builder: (context) => const Loginscreen()));
   }
 
-  List<String> image = [
-    "assets/naruto.png",
-    "assets/kakashi.png",
-    "assets/hinata.png",
-    "assets/player_456.png",
-    "assets/player_001.png"
+  List<ShopModel> shopmodel = [
+    ShopModel(
+        background: 'assets/anime_bg.jpg',
+        image: 'assets/hinata.png',
+        title: 'Anime Dolls'),
+    ShopModel(
+        background: 'assets/squid_game_bg.jpg',
+        image: 'assets/player_14.png',
+        title: "Squid Game Dolls"),
+    ShopModel(
+        background: 'assets/money_heist_bg.jpg',
+        image: 'assets/professor.png',
+        title: 'Money Heist Dolls'),
   ];
 
   int currentPage = 0;
@@ -69,22 +77,22 @@ class _ShopscreenState extends State<Shopscreen> {
         child: Stack(
           children: [
             AnimatedSwitcher(
-              duration: const Duration(milliseconds: 600),
+              duration: const Duration(milliseconds: 500),
               child: Container(
-                key: ValueKey<String>(image[currentPage]),
+                key: ValueKey<String>(shopmodel[currentPage].background),
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage(image[currentPage]),
-                    //fit: BoxFit.cover,
+                    image: AssetImage(shopmodel[currentPage].background),
+                    fit: BoxFit.cover,
                   ),
                 ),
                 child: BackdropFilter(
                   filter: ImageFilter.blur(
-                    sigmaX: 10,
-                    sigmaY: 10,
+                    sigmaX: 5,
+                    sigmaY: 5,
                   ),
                   child: Container(
-                    color: Colors.black.withOpacity(0.2),
+                    color: Colors.black.withOpacity(0.1),
                   ),
                 ),
               ),
@@ -92,9 +100,9 @@ class _ShopscreenState extends State<Shopscreen> {
             Padding(
               padding: EdgeInsets.symmetric(vertical: h * 0.10),
               child: FractionallySizedBox(
-                heightFactor: h * 0.001,
+                heightFactor: h * 0.0011,
                 child: PageView.builder(
-                  itemCount: image.length,
+                  itemCount: shopmodel.length,
                   onPageChanged: (int val) {
                     setState(() {
                       currentPage = val;
@@ -105,47 +113,59 @@ class _ShopscreenState extends State<Shopscreen> {
                       margin: EdgeInsets.symmetric(horizontal: w * 0.08),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(w / 25),
-                        color: Colors.white.withOpacity(0.3),
+                        color: Colors.white.withOpacity(0.2),
                       ),
                       child: Padding(
                         padding: EdgeInsets.symmetric(vertical: h * 0.08),
                         child: Column(
                           children: [
                             SizedBox(
-                              height: h * 0.25,
+                              height: h * 0.30,
                               width: w * 0.35,
                               child: Image.asset(
-                                image[index],
+                                shopmodel[index].image,
                                 fit: BoxFit.cover,
                               ),
                             ),
                             SizedBox(
                               height: h * 0.08,
                             ),
-                            GestureDetector(
-                              onTap: () {
-                                logout(context);
-                              },
-                              child: Container(
-                                height: h * 0.06,
-                                width: w * 0.30,
-                                decoration: BoxDecoration(
-                                  color: Colors.white.withOpacity(0.5),
-                                  borderRadius: BorderRadius.circular(w / 30),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text(
+                                  shopmodel[index].title,
+                                  style: GoogleFonts.roboto(
+                                    textStyle: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: w / 13,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
                                 ),
-                                child: Center(
-                                  child: Text(
-                                    "Logout",
-                                    style: GoogleFonts.poppins(
-                                      textStyle: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: w / 23,
+                                SizedBox(
+                                  height: h * 0.04,
+                                ),
+                                Container(
+                                  height: h * 0.06,
+                                  width: w * 0.30,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(w / 65),
+                                    color: Colors.white.withOpacity(0.4),
+                                  ),
+                                  child: Center(
+                                    child: Text(
+                                      "See more",
+                                      style: GoogleFonts.raleway(
+                                        textStyle: TextStyle(
+                                            fontSize: w / 23,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white),
                                       ),
                                     ),
                                   ),
                                 ),
-                              ),
+                              ],
                             ),
                           ],
                         ),
