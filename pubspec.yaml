@@ -43,6 +43,7 @@ dependencies:
 
   google_fonts: ^2.1.0
   fluttertoast: ^8.0.8
+  motion_toast: ^1.6.0
   
 
 dev_dependencies:

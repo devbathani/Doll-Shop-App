@@ -1,11 +1,9 @@
-import 'dart:ffi';
+import 'dart:ui';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
-import 'package:shop_app/provider/google_sigin_provider.dart';
 import 'package:shop_app/screens/loginscreen.dart';
 import 'package:shop_app/usermodel/user_model.dart';
 
@@ -41,6 +39,15 @@ class _ShopscreenState extends State<Shopscreen> {
         MaterialPageRoute(builder: (context) => const Loginscreen()));
   }
 
+  List<String> image = [
+    "assets/naruto.png",
+    "assets/kakashi.png",
+    "assets/hinata.png",
+    "assets/player_456.png",
+    "assets/player_001.png"
+  ];
+
+  int currentPage = 0;
   @override
   Widget build(BuildContext context) {
     var h = MediaQuery.of(context).size.height;
@@ -59,77 +66,95 @@ class _ShopscreenState extends State<Shopscreen> {
             end: Alignment.bottomCenter,
           ),
         ),
-        child: Column(
+        child: Stack(
           children: [
-            Padding(
-              padding: EdgeInsets.symmetric(
-                  horizontal: w * 0.02, vertical: h * 0.05),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  CircleAvatar(
-                    radius: 20,
-                    //backgroundImage: NetworkImage(user.currentUser!.photoURL!),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(
-              height: h * 0.03,
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: w * 0.08),
-              child: Text(
-                "${usermodel.username}   ${usermodel.phonenumber}",
-                style: GoogleFonts.roboto(
-                  textStyle: TextStyle(
-                    color: Colors.white,
-                    fontSize: w / 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(
-              height: h * 0.30,
-            ),
-            GestureDetector(
-              onTap: () {
-                logout(context);
-              },
+            AnimatedSwitcher(
+              duration: const Duration(milliseconds: 600),
               child: Container(
-                height: h * 0.07,
-                width: w * 0.30,
+                key: ValueKey<String>(image[currentPage]),
                 decoration: BoxDecoration(
-                  color: const Color(0xff072048),
-                  borderRadius: BorderRadius.circular(15),
-                  boxShadow: const [
-                    BoxShadow(
-                      color: Colors.black,
-                      offset: Offset(4.0, 4.0),
-                      blurRadius: 15.0,
-                      spreadRadius: 1.0,
-                    ),
-                    BoxShadow(
-                      color: Color(0xff092f6d),
-                      offset: Offset(-4.0, -4.0),
-                      blurRadius: 15.0,
-                      spreadRadius: 1.0,
-                    ),
-                  ],
+                  image: DecorationImage(
+                    image: AssetImage(image[currentPage]),
+                    //fit: BoxFit.cover,
+                  ),
                 ),
-                child: Center(
-                  child: Text(
-                    "Logout",
-                    style: GoogleFonts.roboto(
-                        textStyle: TextStyle(
-                            color: Colors.white,
-                            fontSize: w / 18,
-                            fontWeight: FontWeight.bold)),
+                child: BackdropFilter(
+                  filter: ImageFilter.blur(
+                    sigmaX: 10,
+                    sigmaY: 10,
+                  ),
+                  child: Container(
+                    color: Colors.black.withOpacity(0.2),
                   ),
                 ),
               ),
             ),
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: h * 0.10),
+              child: FractionallySizedBox(
+                heightFactor: h * 0.001,
+                child: PageView.builder(
+                  itemCount: image.length,
+                  onPageChanged: (int val) {
+                    setState(() {
+                      currentPage = val;
+                    });
+                  },
+                  itemBuilder: (context, int index) {
+                    return Container(
+                      margin: EdgeInsets.symmetric(horizontal: w * 0.08),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(w / 25),
+                        color: Colors.white.withOpacity(0.3),
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(vertical: h * 0.08),
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              height: h * 0.25,
+                              width: w * 0.35,
+                              child: Image.asset(
+                                image[index],
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            SizedBox(
+                              height: h * 0.08,
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                logout(context);
+                              },
+                              child: Container(
+                                height: h * 0.06,
+                                width: w * 0.30,
+                                decoration: BoxDecoration(
+                                  color: Colors.white.withOpacity(0.5),
+                                  borderRadius: BorderRadius.circular(w / 30),
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    "Logout",
+                                    style: GoogleFonts.poppins(
+                                      textStyle: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: w / 23,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            )
           ],
         ),
       ),

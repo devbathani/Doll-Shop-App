@@ -37,6 +37,7 @@ class _HomescreenState extends State<Homescreen> {
                 ),
               );
             } else if (snapshot.hasData) {
+              print(snapshot.hasData);
               return const Shopscreen();
             } else if (snapshot.hasError) {
               return const Text("Something went wrong !!");
@@ -49,3 +50,5 @@ class _HomescreenState extends State<Homescreen> {
     );
   }
 }
+
+

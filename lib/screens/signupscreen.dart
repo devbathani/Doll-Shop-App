@@ -51,7 +51,7 @@ class _SignupscreenState extends State<Signupscreen>
         .collection("user_name")
         .doc(user.uid)
         .set(usermodel.toMap());
-    Fluttertoast.showToast(msg: "Account create successfully");
+    //Fluttertoast.showToast(msg: "Account create succesfully");
 
     Navigator.pushAndRemoveUntil(
         (context),
@@ -184,7 +184,8 @@ class _SignupscreenState extends State<Signupscreen>
                             hintText: "Username",
                             hintStyle: GoogleFonts.poppins(
                               textStyle: TextStyle(
-                                  color: Colors.grey, fontSize: w / 23),
+                                  color: Colors.grey.shade300,
+                                  fontSize: w / 23),
                             ),
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.all(
@@ -219,6 +220,8 @@ class _SignupscreenState extends State<Signupscreen>
                       child: Padding(
                         padding: EdgeInsets.symmetric(horizontal: w * 0.08),
                         child: TextFormField(
+                          //maxLength: 10,
+
                           keyboardType: TextInputType.phone,
                           controller: phonenumber,
                           onSaved: (value) {
@@ -258,7 +261,8 @@ class _SignupscreenState extends State<Signupscreen>
                             hintText: "Phone Number",
                             hintStyle: GoogleFonts.poppins(
                               textStyle: TextStyle(
-                                  color: Colors.grey, fontSize: w / 23),
+                                  color: Colors.grey.shade300,
+                                  fontSize: w / 23),
                             ),
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.all(
@@ -332,7 +336,8 @@ class _SignupscreenState extends State<Signupscreen>
                             hintText: "Email",
                             hintStyle: GoogleFonts.poppins(
                               textStyle: TextStyle(
-                                  color: Colors.grey, fontSize: w / 23),
+                                  color: Colors.grey.shade300,
+                                  fontSize: w / 23),
                             ),
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.all(
@@ -418,7 +423,8 @@ class _SignupscreenState extends State<Signupscreen>
                               hintText: "Password",
                               hintStyle: GoogleFonts.poppins(
                                 textStyle: TextStyle(
-                                    color: Colors.grey, fontSize: w / 23),
+                                    color: Colors.grey.shade300,
+                                    fontSize: w / 23),
                               ),
                               enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.all(

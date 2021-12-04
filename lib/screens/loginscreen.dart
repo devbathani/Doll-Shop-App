@@ -38,16 +38,19 @@ class _LoginscreenState extends State<Loginscreen>
 
   void userlogin(String useremail, String userpass) async {
     if (_form.currentState!.validate()) {
-      await auth
-          .signInWithEmailAndPassword(email: useremail, password: userpass)
-          .then((userid) => {
-                Fluttertoast.showToast(msg: "Login Successful"),
-                Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context) => const Homescreen()))
-              })
-          .catchError((e) {
-        Fluttertoast.showToast(msg: "Enter a valid Userid");
-      });
+      var userCred = await auth.signInWithEmailAndPassword(
+          email: useremail, password: userpass);
+      final userId = userCred.user;
+      if (userId != null) {
+        //showLoaderDialog(context);
+        Fluttertoast.showToast(msg: "Login Success");
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (_) => const Homescreen(),
+          ),
+        );
+      }
     }
   }
 
@@ -437,4 +440,45 @@ class _LoginscreenState extends State<Loginscreen>
       ),
     );
   }
+}
+
+showLoaderDialog(BuildContext context) {
+  AlertDialog alert = AlertDialog(
+    backgroundColor: Colors.white,
+    content: Row(
+      children: [
+        SizedBox(
+          height: 80,
+          width: 90,
+          child: Image.asset(
+            "assets/loading.gif",
+            fit: BoxFit.cover,
+          ),
+        ),
+        const SizedBox(
+          width: 10,
+        ),
+        Container(
+          margin: const EdgeInsets.only(left: 7),
+          child: const Text(
+            "Loading...",
+            style: TextStyle(
+                color: Colors.grey, fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+        ),
+      ],
+    ),
+  );
+
+  return showDialog(
+    barrierDismissible: false,
+    context: context,
+    builder: (BuildContext context) {
+      Future.delayed(const Duration(seconds: 2), () {
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) => const Homescreen()));
+      });
+      return alert;
+    },
+  );
 }
