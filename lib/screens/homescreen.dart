@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shop_app/screens/loginscreen.dart';
+import 'package:shop_app/screens/mainshopscreen.dart';
 import 'package:shop_app/screens/shopscreen.dart';
 
 class Homescreen extends StatefulWidget {
@@ -37,8 +38,8 @@ class _HomescreenState extends State<Homescreen> {
                 ),
               );
             } else if (snapshot.hasData) {
-              print(snapshot.hasData);
-              return const Shopscreen();
+              
+              return const MainShopscreen();
             } else if (snapshot.hasError) {
               return const Text("Something went wrong !!");
             } else {
@@ -50,5 +51,3 @@ class _HomescreenState extends State<Homescreen> {
     );
   }
 }
-
-

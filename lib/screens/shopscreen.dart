@@ -1,61 +1,46 @@
 import 'dart:ui';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shop_app/model/shop_model.dart';
-import 'package:shop_app/screens/loginscreen.dart';
-import 'package:shop_app/model/user_model.dart';
 
 class Shopscreen extends StatefulWidget {
-  const Shopscreen({Key? key}) : super(key: key);
+  final VoidCallback opendrawer;
+  const Shopscreen({
+    Key? key,
+    required this.opendrawer,
+  }) : super(key: key);
 
   @override
-  _ShopscreenState createState() => _ShopscreenState();
+  _ShopscreenState createState() => _ShopscreenState(opendrawer: opendrawer);
 }
 
 class _ShopscreenState extends State<Shopscreen> {
-  User? user = FirebaseAuth.instance.currentUser;
-
-  Usermodel usermodel = Usermodel();
-
-  @override
-  void initState() {
-    FirebaseFirestore.instance
-        .collection("user_name")
-        .doc(user!.uid)
-        .get()
-        .then((value) {
-      usermodel = Usermodel.fromMap(value.data());
-      setState(() {});
-    });
-
-    super.initState();
-  }
-
-  Future<void> logout(BuildContext context) async {
-    await FirebaseAuth.instance.signOut();
-    Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => const Loginscreen()));
-  }
+  final VoidCallback opendrawer;
+  _ShopscreenState({
+    required this.opendrawer,
+  });
 
   List<ShopModel> shopmodel = [
     ShopModel(
-        background: 'assets/anime_bg.jpg',
-        image: 'assets/hinata.png',
-        title: 'Anime Dolls'),
+      background: 'assets/anime_bg.jpg',
+      image: 'assets/madara.png',
+      title: 'Anime Dolls',
+    ),
     ShopModel(
-        background: 'assets/squid_game_bg.jpg',
-        image: 'assets/player_14.png',
-        title: "Squid Game Dolls"),
+      background: 'assets/squid_game_bg.jpg',
+      image: 'assets/player_001.png',
+      title: "Squid Game Dolls",
+    ),
     ShopModel(
-        background: 'assets/money_heist_bg.jpg',
-        image: 'assets/professor.png',
-        title: 'Money Heist Dolls'),
+      background: 'assets/money_heist_bg.jpg',
+      image: 'assets/professor.png',
+      title: 'Money Heist Dolls',
+    ),
   ];
 
   int currentPage = 0;
+
   @override
   Widget build(BuildContext context) {
     var h = MediaQuery.of(context).size.height;
@@ -86,22 +71,42 @@ class _ShopscreenState extends State<Shopscreen> {
                     fit: BoxFit.cover,
                   ),
                 ),
-                child: BackdropFilter(
-                  filter: ImageFilter.blur(
-                    sigmaX: 5,
-                    sigmaY: 5,
+                // child: BackdropFilter(
+                //   filter: ImageFilter.blur(
+                //     sigmaX: 5,
+                //     sigmaY: 5,
+                //   ),
+                //   child: Container(
+                //     color: Colors.black.withOpacity(0.1),
+                //   ),
+                // ),
+              ),
+            ),
+            Positioned(
+              top: h * 0.025,
+              left: w * 0.03,
+              child: Row(
+                children: [
+                  SizedBox(
+                    height: h * 0.08,
+                    width: w * 0.08,
+                    child: IconButton(
+                      onPressed: opendrawer,
+                      icon: Icon(
+                        Icons.menu,
+                        color: Colors.white,
+                        size: w / 16,
+                      ),
+                    ),
                   ),
-                  child: Container(
-                    color: Colors.black.withOpacity(0.1),
-                  ),
-                ),
+                ],
               ),
             ),
             Padding(
-              padding: EdgeInsets.symmetric(vertical: h * 0.10),
+              padding: EdgeInsets.symmetric(vertical: h * 0.15),
               child: FractionallySizedBox(
-                heightFactor: h * 0.0011,
-                child: PageView.builder(
+                heightFactor: h * 0.00125,
+                child: PageView.builder( 
                   itemCount: shopmodel.length,
                   onPageChanged: (int val) {
                     setState(() {
@@ -113,18 +118,19 @@ class _ShopscreenState extends State<Shopscreen> {
                       margin: EdgeInsets.symmetric(horizontal: w * 0.08),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(w / 25),
-                        color: Colors.white.withOpacity(0.2),
+                        color: Colors.white.withOpacity(0.3),
                       ),
                       child: Padding(
                         padding: EdgeInsets.symmetric(vertical: h * 0.08),
                         child: Column(
                           children: [
                             SizedBox(
-                              height: h * 0.30,
-                              width: w * 0.35,
+                              height: h * 0.28,
+                              width: w * 0.36,
                               child: Image.asset(
                                 shopmodel[index].image,
                                 fit: BoxFit.cover,
+                                scale: h * 0.008,
                               ),
                             ),
                             SizedBox(
@@ -174,7 +180,7 @@ class _ShopscreenState extends State<Shopscreen> {
                   },
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),
