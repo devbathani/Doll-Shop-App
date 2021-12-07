@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shop_app/model/shop_model.dart';
+import 'package:shop_app/screens/cartscreen.dart';
 
 class Shopscreen extends StatefulWidget {
   final VoidCallback opendrawer;
@@ -106,7 +107,7 @@ class _ShopscreenState extends State<Shopscreen> {
               padding: EdgeInsets.symmetric(vertical: h * 0.15),
               child: FractionallySizedBox(
                 heightFactor: h * 0.00125,
-                child: PageView.builder( 
+                child: PageView.builder(
                   itemCount: shopmodel.length,
                   onPageChanged: (int val) {
                     setState(() {
@@ -152,21 +153,31 @@ class _ShopscreenState extends State<Shopscreen> {
                                 SizedBox(
                                   height: h * 0.04,
                                 ),
-                                Container(
-                                  height: h * 0.06,
-                                  width: w * 0.30,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(w / 65),
-                                    color: Colors.white.withOpacity(0.4),
-                                  ),
-                                  child: Center(
-                                    child: Text(
-                                      "See more",
-                                      style: GoogleFonts.raleway(
-                                        textStyle: TextStyle(
-                                            fontSize: w / 23,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white),
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                Cartscreen()));
+                                  },
+                                  child: Container(
+                                    height: h * 0.06,
+                                    width: w * 0.30,
+                                    decoration: BoxDecoration(
+                                      borderRadius:
+                                          BorderRadius.circular(w / 65),
+                                      color: Colors.white.withOpacity(0.4),
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                        "See more",
+                                        style: GoogleFonts.raleway(
+                                          textStyle: TextStyle(
+                                              fontSize: w / 23,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white),
+                                        ),
                                       ),
                                     ),
                                   ),

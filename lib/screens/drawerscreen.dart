@@ -52,8 +52,8 @@ class _DrawerscreenState extends State<Drawerscreen> {
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              Colors.blue.shade900,
-              Colors.black,
+              const Color(0xff0575E6),
+              const Color(0xff021B79).withOpacity(0.7),
             ],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
@@ -214,7 +214,7 @@ class _DrawerscreenState extends State<Drawerscreen> {
                 ),
               ),
               SizedBox(
-                height: h * 0.20,
+                height: h * 0.30,
               ),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: w * 0.04),
