@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:shop_app/screens/cartscreen.dart';
 import 'package:shop_app/screens/drawerscreen.dart';
 import 'package:shop_app/screens/shopscreen.dart';
 
@@ -57,7 +56,7 @@ class _MainShopscreenState extends State<MainShopscreen> {
       },
       onTap: closedrawer,
       child: AnimatedContainer(
-        duration: const Duration(milliseconds: 400),
+        duration: const Duration(milliseconds: 300),
         transform: Matrix4.translationValues(x, y, 0)..scale(scale),
         child: Shopscreen(opendrawer: opendrawer),
       ),

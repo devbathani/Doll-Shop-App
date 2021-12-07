@@ -5,6 +5,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shop_app/screens/homescreen.dart';
 import 'package:shop_app/model/user_model.dart';
+import 'package:shop_app/transition/page_transition.dart';
 
 class Signupscreen extends StatefulWidget {
   const Signupscreen({Key? key}) : super(key: key);
@@ -53,10 +54,12 @@ class _SignupscreenState extends State<Signupscreen>
         .set(usermodel.toMap());
     //Fluttertoast.showToast(msg: "Account create succesfully");
 
-    Navigator.pushAndRemoveUntil(
-        (context),
-        MaterialPageRoute(builder: (context) => const Homescreen()),
-        (route) => false);
+    Navigator.pushReplacement(
+      (context),
+      CustomPageTransition(
+        child: const Homescreen(),
+      ),
+    );
   }
 
   @override
@@ -81,11 +84,11 @@ class _SignupscreenState extends State<Signupscreen>
       body: Container(
         height: double.infinity,
         width: double.infinity,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              Colors.black,
-              Colors.blue.shade900,
+              Color(0xff021B79),
+              Color(0xff0575E6),
             ],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
@@ -470,17 +473,17 @@ class _SignupscreenState extends State<Signupscreen>
                               height: h * 0.07,
                               width: w * 0.30,
                               decoration: BoxDecoration(
-                                color: const Color(0xff0b3c88),
+                                color: const Color(0xff046cdb),
                                 borderRadius: BorderRadius.circular(15),
                                 boxShadow: const [
                                   BoxShadow(
-                                    color: Color(0xff0e47a0),
+                                    color: Color(0xff0460cd),
                                     offset: Offset(4.0, 4.0),
                                     blurRadius: 15.0,
                                     spreadRadius: 1.0,
                                   ),
                                   BoxShadow(
-                                    color: Color(0xff092a5f),
+                                    color: Color(0xff0575e5),
                                     offset: Offset(-4.0, -4.0),
                                     blurRadius: 15.0,
                                     spreadRadius: 1.0,

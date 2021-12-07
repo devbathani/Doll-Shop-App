@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:shop_app/provider/google_sigin_provider.dart';
 import 'package:shop_app/screens/signupscreen.dart';
+import 'package:shop_app/transition/page_transition.dart';
 
 import 'homescreen.dart';
 
@@ -46,8 +47,8 @@ class _LoginscreenState extends State<Loginscreen>
         Fluttertoast.showToast(msg: "Login Success");
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(
-            builder: (_) => const Homescreen(),
+          CustomPageTransition(
+            child: const Homescreen(),
           ),
         );
       }
@@ -68,11 +69,11 @@ class _LoginscreenState extends State<Loginscreen>
       body: Container(
         height: double.infinity,
         width: double.infinity,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              Colors.black,
-              Colors.blue.shade900,
+              Color(0xff021B79),
+              Color(0xff0575E6),
             ],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
@@ -174,7 +175,8 @@ class _LoginscreenState extends State<Loginscreen>
                             hintText: "Email",
                             hintStyle: GoogleFonts.poppins(
                               textStyle: TextStyle(
-                                  color: Colors.grey, fontSize: w / 23),
+                                  color: Colors.grey.shade300,
+                                  fontSize: w / 23),
                             ),
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.all(
@@ -264,7 +266,8 @@ class _LoginscreenState extends State<Loginscreen>
                               hintText: "Password",
                               hintStyle: GoogleFonts.poppins(
                                 textStyle: TextStyle(
-                                    color: Colors.grey, fontSize: w / 23),
+                                    color: Colors.grey.shade300,
+                                    fontSize: w / 23),
                               ),
                               enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.all(
@@ -313,17 +316,17 @@ class _LoginscreenState extends State<Loginscreen>
                         height: h * 0.07,
                         width: w * 0.30,
                         decoration: BoxDecoration(
-                          color: const Color(0xff082b62),
+                          color: const Color(0xff0354bd),
                           borderRadius: BorderRadius.circular(15),
                           boxShadow: const [
                             BoxShadow(
-                              color: Color(0xff093880),
+                              color: Color(0xff0240a5),
                               offset: Offset(4.0, 4.0),
                               blurRadius: 15.0,
                               spreadRadius: 1.0,
                             ),
                             BoxShadow(
-                              color: Color(0xff051631),
+                              color: Color(0xff045cc8),
                               offset: Offset(-4.0, -4.0),
                               blurRadius: 15.0,
                               spreadRadius: 1.0,
@@ -384,10 +387,11 @@ class _LoginscreenState extends State<Loginscreen>
                         ),
                         GestureDetector(
                           onTap: () {
-                            Navigator.of(context).pushReplacement(
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        const Signupscreen()));
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => const Signupscreen(),
+                              ),
+                            );
                           },
                           child: Text(
                             "SignUp",
