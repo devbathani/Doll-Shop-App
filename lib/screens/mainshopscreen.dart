@@ -16,6 +16,8 @@ class _MainShopscreenState extends State<MainShopscreen> {
 
   late double scale = scale;
 
+  late bool isdraweropen;
+
   bool isdragging = false;
 
   @override
@@ -29,6 +31,7 @@ class _MainShopscreenState extends State<MainShopscreen> {
       x = 210;
       y = 160;
       scale = 0.7;
+      isdraweropen = true;
     });
   }
 
@@ -37,6 +40,7 @@ class _MainShopscreenState extends State<MainShopscreen> {
       x = 0;
       y = 0;
       scale = 1;
+      isdraweropen = false;
     });
   }
 
@@ -46,19 +50,25 @@ class _MainShopscreenState extends State<MainShopscreen> {
     return GestureDetector(
       onHorizontalDragStart: (details) => isdragging = true,
       onHorizontalDragUpdate: (details) {
+        if (!isdragging) return;
+
         const delta = 1;
         if (details.delta.dx > delta) {
           opendrawer();
         } else if (details.delta.dx < -delta) {
           closedrawer();
         }
+
         isdragging = false;
       },
       onTap: closedrawer,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 300),
         transform: Matrix4.translationValues(x, y, 0)..scale(scale),
-        child: Shopscreen(opendrawer: opendrawer),
+        child: AbsorbPointer(
+          absorbing: isdraweropen,
+          child: Shopscreen(opendrawer: opendrawer),
+        ),
       ),
     );
   }

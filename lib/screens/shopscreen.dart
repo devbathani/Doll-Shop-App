@@ -137,7 +137,7 @@ class _ShopscreenState extends State<Shopscreen>
                       (model) {
                         return FractionallySizedBox(
                           heightFactor: h * 0.00125,
-                          widthFactor: w * 0.0031,
+                          widthFactor: w * 0.00315,
                           child: Container(
                             margin: EdgeInsets.symmetric(horizontal: w * 0.08),
                             decoration: BoxDecoration(
@@ -187,10 +187,12 @@ class _ShopscreenState extends State<Shopscreen>
                                           GestureDetector(
                                             onTap: () {
                                               Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          Cartscreen()));
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      const Cartscreen(),
+                                                ),
+                                              );
                                             },
                                             child: Container(
                                               height: h * 0.06,
