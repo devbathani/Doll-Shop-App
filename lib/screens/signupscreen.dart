@@ -5,7 +5,9 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shop_app/screens/homescreen.dart';
 import 'package:shop_app/model/user_model.dart';
+import 'package:shop_app/screens/loginscreen.dart';
 import 'package:shop_app/transition/page_transition.dart';
+import 'package:shop_app/transition/page_transition_left.dart';
 
 class Signupscreen extends StatefulWidget {
   const Signupscreen({Key? key}) : super(key: key);
@@ -104,41 +106,62 @@ class _SignupscreenState extends State<Signupscreen>
                   end: const Offset(0, 0.02),
                 ).animate(animationController),
                 child: FadeTransition(
-                  opacity: animationController,
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: w * 0.10),
-                    child: Stack(
+                    opacity: animationController,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Container(
-                          height: h * 0.30,
-                          width: w * 0.80,
-                          decoration: const BoxDecoration(
-                            image: DecorationImage(
-                                image: AssetImage('assets/signupbg.png'),
-                                fit: BoxFit.cover),
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: w * 0.01, vertical: h * 0.018),
+                          child: IconButton(
+                            onPressed: () {
+                              Navigator.pushReplacement(
+                                context,
+                                CustomPageTransitionLeft(
+                                  child: const Loginscreen(),
+                                ),
+                              );
+                            },
+                            icon: Icon(
+                              Icons.arrow_back_ios_new_rounded,
+                              size: w / 20,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
-                        Positioned(
-                          bottom: h * 0.00,
-                          right: w * 0.24,
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: w * 0.10),
+                          child: Container(
+                            height: h * 0.15,
+                            width: w * 0.80,
+                            decoration: const BoxDecoration(
+                              image: DecorationImage(
+                                  image: AssetImage('assets/signupbg.png'),
+                                  fit: BoxFit.cover),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: h * 0.02,
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: w * 0.35),
                           child: Text(
                             "SignUp",
                             style: GoogleFonts.sora(
                               textStyle: TextStyle(
                                 color: Colors.white,
-                                fontSize: w / 12.5,
+                                fontSize: w / 13,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
                           ),
                         ),
                       ],
-                    ),
-                  ),
-                ),
+                    )),
               ),
               SizedBox(
-                height: h * 0.05,
+                height: h * 0.03,
               ),
               Form(
                 key: _form,

@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shop_app/model/user_model.dart';
+import 'package:shop_app/transition/page_transition_left.dart';
 
 import 'loginscreen.dart';
 
@@ -35,8 +36,8 @@ class _DrawerscreenState extends State<Drawerscreen> {
   Future<void> logout(BuildContext context) async {
     await FirebaseAuth.instance.signOut();
     Navigator.of(context).pushReplacement(
-      MaterialPageRoute(
-        builder: (context) => const Loginscreen(),
+      CustomPageTransitionLeft(
+        child: const Loginscreen(),
       ),
     );
   }
@@ -49,11 +50,11 @@ class _DrawerscreenState extends State<Drawerscreen> {
       body: Container(
         height: double.infinity,
         width: double.infinity,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              const Color(0xff0575E6),
-              const Color(0xff021B79).withOpacity(0.7),
+              Color(0xff0575E6),
+              Color(0xff021B79),
             ],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
@@ -214,7 +215,7 @@ class _DrawerscreenState extends State<Drawerscreen> {
                 ),
               ),
               SizedBox(
-                height: h * 0.30,
+                height: h * 0.20,
               ),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: w * 0.04),
@@ -226,7 +227,21 @@ class _DrawerscreenState extends State<Drawerscreen> {
                     height: h * 0.06,
                     width: w * 0.35,
                     decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.3),
+                      color: const Color(0xff022889),
+                      boxShadow: const [
+                        BoxShadow(
+                          color: Color(0xff011f7e),
+                          offset: Offset(4.0, 4.0),
+                          blurRadius: 15.0,
+                          spreadRadius: 1.0,
+                        ),
+                        BoxShadow(
+                          color: Color(0xff033193),
+                          offset: Offset(-4.0, -4.0),
+                          blurRadius: 15.0,
+                          spreadRadius: 1.0,
+                        ),
+                      ],
                       borderRadius: BorderRadius.circular(w / 60),
                     ),
                     child: Padding(
