@@ -3,6 +3,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shop_app/model/shop_model.dart';
+import 'package:shop_app/screens/anime_shop_screen.dart';
 import 'package:shop_app/screens/cartscreen.dart';
 
 class Shopscreen extends StatefulWidget {
@@ -122,8 +123,11 @@ class _ShopscreenState extends State<Shopscreen>
                   padding: EdgeInsets.symmetric(vertical: h * 0.15),
                   child: CarouselSlider(
                     options: CarouselOptions(
+                      aspectRatio: 16 / 9,
+                      enableInfiniteScroll: true,
+                      viewportFraction: w * 0.0026,
                       height: h * 0.65,
-                      autoPlayInterval: const Duration(seconds: 5),
+                      autoPlayInterval: const Duration(seconds: 4),
                       autoPlayAnimationDuration: const Duration(seconds: 2),
                       autoPlay: true,
                       pageSnapping: true,
@@ -135,92 +139,102 @@ class _ShopscreenState extends State<Shopscreen>
                     ),
                     items: shopmodel.map(
                       (model) {
-                        return FractionallySizedBox(
-                          heightFactor: h * 0.00125,
-                          widthFactor: w * 0.00315,
-                          child: Container(
-                            margin: EdgeInsets.symmetric(horizontal: w * 0.08),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(w / 25),
-                              color: Colors.white.withOpacity(0.3),
-                            ),
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(vertical: h * 0.08),
-                              child: SlideTransition(
-                                position: Tween<Offset>(
-                                        begin: const Offset(0.10, 0),
-                                        end: const Offset(0.01, 0.02))
-                                    .animate(animationController),
-                                child: FadeTransition(
-                                  opacity: animationController,
-                                  child: Column(
-                                    children: [
-                                      SizedBox(
-                                        height: h * 0.28,
-                                        width: w * 0.36,
-                                        child: Image.asset(
-                                          model.image,
-                                          fit: BoxFit.cover,
-                                          scale: h * 0.008,
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: h * 0.05,
-                                      ),
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          Text(
-                                            model.title,
-                                            style: GoogleFonts.roboto(
-                                              textStyle: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: w / 13,
-                                                fontWeight: FontWeight.bold,
-                                              ),
+                        return Padding(
+                          padding: EdgeInsets.symmetric(horizontal: w * 0.03),
+                          child: FractionallySizedBox(
+                            heightFactor: h * 0.00125,
+                            widthFactor: w * 0.00315,
+                            child: Container(
+                              margin:
+                                  EdgeInsets.symmetric(horizontal: w * 0.08),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(w / 25),
+                                color: Colors.white.withOpacity(0.3),
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(
+                                    vertical: h * 0.08, horizontal: w * 0.05),
+                                child: SlideTransition(
+                                  position: Tween<Offset>(
+                                    begin: const Offset(0, 0.002),
+                                    end: const Offset(0, 0.001),
+                                  ).animate(animationController),
+                                  child: FadeTransition(
+                                    opacity: animationController,
+                                    child: Column(
+                                      children: [
+                                        Hero(
+                                          tag: model.image,
+                                          child: SizedBox(
+                                            height: h * 0.28,
+                                            width: w * 0.36,
+                                            child: Image.asset(
+                                              model.image,
+                                              fit: BoxFit.cover,
+                                              scale: h * 0.008,
                                             ),
                                           ),
-                                          SizedBox(
-                                            height: h * 0.04,
-                                          ),
-                                          GestureDetector(
-                                            onTap: () {
-                                              Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      const Cartscreen(),
+                                        ),
+                                        SizedBox(
+                                          height: h * 0.05,
+                                        ),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              model.title,
+                                              style: GoogleFonts.roboto(
+                                                textStyle: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: w / 13,
+                                                  fontWeight: FontWeight.bold,
                                                 ),
-                                              );
-                                            },
-                                            child: Container(
-                                              height: h * 0.06,
-                                              width: w * 0.30,
-                                              decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                        w / 65),
-                                                color: Colors.white
-                                                    .withOpacity(0.4),
                                               ),
-                                              child: Center(
-                                                child: Text(
-                                                  "See more",
-                                                  style: GoogleFonts.raleway(
-                                                    textStyle: TextStyle(
-                                                        fontSize: w / 23,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        color: Colors.white),
+                                            ),
+                                            SizedBox(
+                                              height: h * 0.04,
+                                            ),
+                                            GestureDetector(
+                                              onTap: () {
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        AnimeShopScreen(
+                                                      model: model,
+                                                    ),
+                                                  ),
+                                                );
+                                              },
+                                              child: Container(
+                                                height: h * 0.06,
+                                                width: w * 0.30,
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          w / 65),
+                                                  color: Colors.white
+                                                      .withOpacity(0.4),
+                                                ),
+                                                child: Center(
+                                                  child: Text(
+                                                    "See more",
+                                                    style: GoogleFonts.raleway(
+                                                      textStyle: TextStyle(
+                                                          fontSize: w / 23,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: Colors.white),
+                                                    ),
                                                   ),
                                                 ),
                                               ),
                                             ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
+                                          ],
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
