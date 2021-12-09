@@ -112,7 +112,7 @@ class _SignupscreenState extends State<Signupscreen>
                       children: [
                         Padding(
                           padding: EdgeInsets.symmetric(
-                              horizontal: w * 0.01, vertical: h * 0.018),
+                              horizontal: w * 0.01, vertical: h * 0.022),
                           child: IconButton(
                             onPressed: () {
                               Navigator.pushReplacement(
@@ -132,7 +132,7 @@ class _SignupscreenState extends State<Signupscreen>
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: w * 0.10),
                           child: Container(
-                            height: h * 0.15,
+                            height: h * 0.145,
                             width: w * 0.80,
                             decoration: const BoxDecoration(
                               image: DecorationImage(

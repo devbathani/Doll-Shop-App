@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:shop_app/provider/google_sigin_provider.dart';
 import 'package:shop_app/screens/signupscreen.dart';
 import 'package:shop_app/transition/page_transition.dart';
+import 'package:shop_app/transition/page_transition_left.dart';
 
 import 'homescreen.dart';
 
@@ -387,9 +388,9 @@ class _LoginscreenState extends State<Loginscreen>
                         ),
                         GestureDetector(
                           onTap: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => const Signupscreen(),
+                            Navigator.of(context).pushReplacement(
+                              CustomPageTransition(
+                                child: const Signupscreen(),
                               ),
                             );
                           },

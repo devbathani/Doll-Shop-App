@@ -227,16 +227,16 @@ class _DrawerscreenState extends State<Drawerscreen> {
                     height: h * 0.06,
                     width: w * 0.35,
                     decoration: BoxDecoration(
-                      color: const Color(0xff022889),
+                      color: const Color(0xff023296),
                       boxShadow: const [
                         BoxShadow(
-                          color: Color(0xff011f7e),
+                          color: Color(0xff021c7b),
                           offset: Offset(4.0, 4.0),
                           blurRadius: 15.0,
                           spreadRadius: 1.0,
                         ),
                         BoxShadow(
-                          color: Color(0xff033193),
+                          color: Color(0xff0341a7),
                           offset: Offset(-4.0, -4.0),
                           blurRadius: 15.0,
                           spreadRadius: 1.0,
