@@ -198,12 +198,12 @@ class _ShopscreenState extends State<Shopscreen>
                                                     child: _model.title.compareTo(
                                                                 'Anime Dolls') ==
                                                             0
-                                                        ? const AnimeShopScreen()
+                                                        ?  AnimeShopScreen(model: shopmodel,)
                                                         : _model.title.compareTo(
                                                                     'Squid Game Dolls') ==
                                                                 0
-                                                            ? const SquidgameShopscreen()
-                                                            : const MoneyheistShopscreen(),
+                                                            ?  SquidgameShopscreen(model: shopmodel,)
+                                                            :  MoneyheistShopscreen(model: shopmodel,),
                                                   ),
                                                 );
                                               },

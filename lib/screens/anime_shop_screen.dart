@@ -4,8 +4,8 @@ import 'package:shop_app/model/anime_model.dart';
 import 'package:shop_app/model/shop_model.dart';
 
 class AnimeShopScreen extends StatefulWidget {
-  
-  const AnimeShopScreen({Key? key}) : super(key: key);
+  final List<ShopModel> model;
+  const AnimeShopScreen({Key? key, required this.model}) : super(key: key);
 
   @override
   _AnimeShopScreenState createState() => _AnimeShopScreenState();
@@ -77,9 +77,8 @@ class _AnimeShopScreenState extends State<AnimeShopScreen> {
                 width: double.infinity,
                 child: GridView.builder(
                   itemCount: anime.length,
-                  gridDelegate:
-                      const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2),
                   itemBuilder: (context, index) {
                     return Padding(
                       padding: EdgeInsets.symmetric(

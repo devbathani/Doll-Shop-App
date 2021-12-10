@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:shop_app/model/anime_model.dart';
 import 'package:shop_app/model/shop_model.dart';
 import 'package:shop_app/model/squidgame_model.dart';
 
 class SquidgameShopscreen extends StatefulWidget {
-  const SquidgameShopscreen({Key? key}) : super(key: key);
+  final List<ShopModel> model;
+  const SquidgameShopscreen({Key? key, required this.model}) : super(key: key);
 
   @override
   _SquidgameShopscreenState createState() => _SquidgameShopscreenState();

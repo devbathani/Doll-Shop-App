@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:shop_app/model/anime_model.dart';
 import 'package:shop_app/model/moneyheist_model.dart';
 import 'package:shop_app/model/shop_model.dart';
 
 class MoneyheistShopscreen extends StatefulWidget {
-  
-  const MoneyheistShopscreen({Key? key}) : super(key: key);
+  final List<ShopModel> model;
+  const MoneyheistShopscreen({Key? key, required this.model}) : super(key: key);
 
   @override
   _MoneyheistShopscreenState createState() => _MoneyheistShopscreenState();
@@ -14,7 +13,10 @@ class MoneyheistShopscreen extends StatefulWidget {
 
 class _MoneyheistShopscreenState extends State<MoneyheistShopscreen> {
   List<Moneyheist> moneyheist = [
-    Moneyheist(name: "Professor", image: 'assets/professor.png',),
+    Moneyheist(
+      name: "Professor",
+      image: 'assets/professor.png',
+    ),
   ];
 
   @override
@@ -27,7 +29,7 @@ class _MoneyheistShopscreenState extends State<MoneyheistShopscreen> {
         width: double.infinity,
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/anime_bg.jpg'),
+            image: AssetImage('assets/money_heist_bg.jpg'),
             fit: BoxFit.cover,
           ),
         ),
@@ -51,9 +53,8 @@ class _MoneyheistShopscreenState extends State<MoneyheistShopscreen> {
                 width: double.infinity,
                 child: GridView.builder(
                   itemCount: moneyheist.length,
-                  gridDelegate:
-                      const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2),
                   itemBuilder: (context, index) {
                     return Padding(
                       padding: EdgeInsets.symmetric(
