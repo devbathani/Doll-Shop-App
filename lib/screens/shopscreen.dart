@@ -4,6 +4,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:shop_app/model/shop_model.dart';
 import 'package:shop_app/screens/anime_shop_screen.dart';
 import 'package:shop_app/screens/cartscreen.dart';
+import 'package:shop_app/screens/moneyheist_shop_screen.dart';
+import 'package:shop_app/screens/squidgame_shop_screnn.dart';
+import 'package:shop_app/transition/page_transition_down.dart';
 
 class Shopscreen extends StatefulWidget {
   final VoidCallback opendrawer;
@@ -13,7 +16,7 @@ class Shopscreen extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _ShopscreenState createState() => _ShopscreenState(opendrawer: opendrawer);
+  _ShopscreenState createState() => _ShopscreenState();
 }
 
 class _ShopscreenState extends State<Shopscreen>
@@ -33,11 +36,6 @@ class _ShopscreenState extends State<Shopscreen>
     animationController.dispose();
     super.dispose();
   }
-
-  final VoidCallback opendrawer;
-  _ShopscreenState({
-    required this.opendrawer,
-  });
 
   List<ShopModel> shopmodel = [
     ShopModel(
@@ -100,7 +98,7 @@ class _ShopscreenState extends State<Shopscreen>
                     height: h * 0.08,
                     width: w * 0.08,
                     child: IconButton(
-                      onPressed: opendrawer,
+                      onPressed: widget.opendrawer,
                       icon: Icon(
                         Icons.menu,
                         color: Colors.white,
@@ -138,6 +136,7 @@ class _ShopscreenState extends State<Shopscreen>
                     ),
                     items: shopmodel.map(
                       (model) {
+                        final _model = model;
                         return Padding(
                           padding: EdgeInsets.symmetric(horizontal: w * 0.03),
                           child: FractionallySizedBox(
@@ -162,16 +161,13 @@ class _ShopscreenState extends State<Shopscreen>
                                     opacity: animationController,
                                     child: Column(
                                       children: [
-                                        Hero(
-                                          tag: model.image,
-                                          child: SizedBox(
-                                            height: h * 0.28,
-                                            width: w * 0.36,
-                                            child: Image.asset(
-                                              model.image,
-                                              fit: BoxFit.cover,
-                                              scale: h * 0.008,
-                                            ),
+                                        SizedBox(
+                                          height: h * 0.28,
+                                          width: w * 0.36,
+                                          child: Image.asset(
+                                            model.image,
+                                            fit: BoxFit.cover,
+                                            scale: h * 0.008,
                                           ),
                                         ),
                                         SizedBox(
@@ -198,11 +194,16 @@ class _ShopscreenState extends State<Shopscreen>
                                               onTap: () {
                                                 Navigator.push(
                                                   context,
-                                                  MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        AnimeShopScreen(
-                                                      model: model,
-                                                    ),
+                                                  CustomPageTransitionDown(
+                                                    child: _model.title.compareTo(
+                                                                'Anime Dolls') ==
+                                                            0
+                                                        ? const AnimeShopScreen()
+                                                        : _model.title.compareTo(
+                                                                    'Squid Game Dolls') ==
+                                                                0
+                                                            ? const SquidgameShopscreen()
+                                                            : const MoneyheistShopscreen(),
                                                   ),
                                                 );
                                               },

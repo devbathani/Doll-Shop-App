@@ -2,45 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shop_app/model/anime_model.dart';
 import 'package:shop_app/model/shop_model.dart';
+import 'package:shop_app/model/squidgame_model.dart';
 
-class AnimeShopScreen extends StatefulWidget {
-  
-  const AnimeShopScreen({Key? key}) : super(key: key);
+class SquidgameShopscreen extends StatefulWidget {
+  const SquidgameShopscreen({Key? key}) : super(key: key);
 
   @override
-  _AnimeShopScreenState createState() => _AnimeShopScreenState();
+  _SquidgameShopscreenState createState() => _SquidgameShopscreenState();
 }
 
-class _AnimeShopScreenState extends State<AnimeShopScreen> {
-  List<Anime> anime = [
-    Anime(
-      name: 'Madara',
-      image: 'assets/madara.png',
-    ),
-    Anime(
-      name: 'Gaara',
-      image: 'assets/gaara.png',
-    ),
-    Anime(
-      name: 'Naruto',
-      image: 'assets/naruto.png',
-    ),
-    Anime(
-      name: 'Hinata',
-      image: 'assets/hinata.png',
-    ),
-    Anime(
-      name: 'Sasuke',
-      image: 'assets/sasuke.png',
-    ),
-    Anime(
-      name: 'Uchiha',
-      image: 'assets/uchiha.png',
-    ),
-    Anime(
-      name: 'Kakashi',
-      image: 'assets/kakashi.png',
-    ),
+class _SquidgameShopscreenState extends State<SquidgameShopscreen> {
+  List<Squidgame> squidgame = [
+    Squidgame(name: 'Player 001', image: 'assets/player_001.png'),
+    Squidgame(name: 'Player 014', image: 'assets/player_14.png'),
+    Squidgame(name: 'Player 067', image: 'assets/player_067.png'),
+    Squidgame(name: 'Player 199', image: 'assets/player_199.png'),
+    Squidgame(name: 'Player 456', image: 'assets/player_456.png'),
   ];
 
   @override
@@ -53,7 +30,7 @@ class _AnimeShopScreenState extends State<AnimeShopScreen> {
         width: double.infinity,
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/anime_bg.jpg'),
+            image: AssetImage('assets/squid_game_bg.jpg'),
             fit: BoxFit.cover,
           ),
         ),
@@ -72,14 +49,13 @@ class _AnimeShopScreenState extends State<AnimeShopScreen> {
                   ),
                 ),
               ),
-              Container(
+              SizedBox(
                 height: h * 0.90,
                 width: double.infinity,
                 child: GridView.builder(
-                  itemCount: anime.length,
-                  gridDelegate:
-                      const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2),
+                  itemCount: squidgame.length,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2),
                   itemBuilder: (context, index) {
                     return Padding(
                       padding: EdgeInsets.symmetric(
@@ -102,13 +78,13 @@ class _AnimeShopScreenState extends State<AnimeShopScreen> {
                                 width: w * 0.20,
                                 decoration: BoxDecoration(
                                   image: DecorationImage(
-                                    image: AssetImage(anime[index].image),
+                                    image: AssetImage(squidgame[index].image),
                                     fit: BoxFit.cover,
                                   ),
                                 ),
                               ),
                               Text(
-                                anime[index].name,
+                                squidgame[index].name,
                                 style: GoogleFonts.poppins(
                                   textStyle: TextStyle(
                                       color: Colors.white,
