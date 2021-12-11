@@ -52,79 +52,73 @@ class _AnimeShopScreenState extends State<AnimeShopScreen> {
         height: double.infinity,
         width: double.infinity,
         decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/anime_bg.jpg'),
-            fit: BoxFit.cover,
+          gradient: LinearGradient(
+            colors: [
+              Color(0xff021B79),
+              Color(0xff0575E6),
+            ],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
           ),
         ),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: h * 0.08),
-                child: Text(
-                  "Anime Dolls",
-                  style: GoogleFonts.poppins(
-                    textStyle: TextStyle(
-                        color: Colors.white,
-                        fontSize: w / 13,
-                        fontWeight: FontWeight.bold),
-                  ),
+        child: Column(
+          
+          children: [
+            SizedBox(
+              height: h * 0.99,
+              child: GridView.builder(
+                itemCount: anime.length,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  childAspectRatio: 0.95,
                 ),
-              ),
-              Container(
-                height: h * 0.90,
-                width: double.infinity,
-                child: GridView.builder(
-                  itemCount: anime.length,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2),
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: EdgeInsets.symmetric(
-                        vertical: h * 0.01,
-                        horizontal: w * 0.02,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: EdgeInsets.symmetric(
+                      vertical: h * 0.01,
+                      horizontal: w * 0.02,
+                    ),
+                    child: Container(
+                      height: h * 0.50,
+                      width: w * 0.45,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(w / 25),
+                        color: Colors.white.withOpacity(0.35),
                       ),
-                      child: Container(
-                        height: h * 0.50,
-                        width: w * 0.45,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(w / 25),
-                          color: Colors.white.withOpacity(0.35),
-                        ),
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: h * 0.01),
-                          child: Column(
-                            children: [
-                              Container(
-                                height: h * 0.15,
-                                width: w * 0.20,
-                                decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                    image: AssetImage(anime[index].image),
-                                    fit: BoxFit.cover,
-                                  ),
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(vertical: h * 0.01),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Container(
+                              height: h * 0.12,
+                              width: w * 0.15,
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  image: AssetImage(anime[index].image),
+                                  fit: BoxFit.fitHeight,
                                 ),
                               ),
-                              Text(
-                                anime[index].name,
-                                style: GoogleFonts.poppins(
-                                  textStyle: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: w / 25,
-                                      fontWeight: FontWeight.bold),
+                            ),
+                            Text(
+                              anime[index].name,
+                              style: GoogleFonts.poppins(
+                                textStyle: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: w / 20,
+                                  fontWeight: FontWeight.bold,
                                 ),
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ),
-                    );
-                  },
-                ),
+                    ),
+                  );
+                },
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

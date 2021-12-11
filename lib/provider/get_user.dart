@@ -14,7 +14,6 @@ class GetUserProvider extends ChangeNotifier {
   void getUser() async {
     user = auth.authStateChanges();
     notifyListeners();
-    print(user!.first.toString());
   }
 
   void setName(String val) {
