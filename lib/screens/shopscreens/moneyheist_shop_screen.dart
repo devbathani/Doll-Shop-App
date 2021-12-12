@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shop_app/model/moneyheist_model.dart';
 import 'package:shop_app/model/shop_model.dart';
+import 'package:insta_like_button/insta_like_button.dart';
 
 class MoneyheistShopscreen extends StatefulWidget {
   final List<ShopModel> model;
@@ -108,15 +109,18 @@ class _MoneyheistShopscreenState extends State<MoneyheistShopscreen> {
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                Container(
+                                SizedBox(
                                   height: h * 0.15,
                                   width: w * 0.20,
-                                  decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                      image:
-                                          AssetImage(moneyheist[index].image),
-                                      fit: BoxFit.cover,
-                                    ),
+                                  child: InstaLikeButton(
+                                    onChanged: () {},
+                                    image: AssetImage(moneyheist[index].image),
+                                    icon: Icons.favorite,
+                                    iconSize: w / 5,
+                                    curve: Curves.bounceOut,
+                                    iconColor: Colors.white.withOpacity(0.4),
+                                    duration: const Duration(milliseconds: 500),
+                                    imageBoxfit: BoxFit.cover,
                                   ),
                                 ),
                                 Text(

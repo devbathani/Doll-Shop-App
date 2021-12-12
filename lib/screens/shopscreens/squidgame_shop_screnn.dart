@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:insta_like_button/insta_like_button.dart';
 import 'package:shop_app/model/shop_model.dart';
 import 'package:shop_app/model/squidgame_model.dart';
 
@@ -99,14 +100,18 @@ class _SquidgameShopscreenState extends State<SquidgameShopscreen> {
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                Container(
+                                SizedBox(
                                   height: h * 0.15,
-                                  width: w * 0.25,
-                                  decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                      image: AssetImage(squidgame[index].image),
-                                      fit: BoxFit.fitWidth,
-                                    ),
+                                  width: w * 0.20,
+                                  child: InstaLikeButton(
+                                    onChanged: () {},
+                                    image: AssetImage(squidgame[index].image),
+                                    icon: Icons.favorite,
+                                    iconSize: w / 5,
+                                    curve: Curves.bounceOut,
+                                    iconColor: Colors.white.withOpacity(0.4),
+                                    duration: const Duration(milliseconds: 500),
+                                    imageBoxfit: BoxFit.cover,
                                   ),
                                 ),
                                 Text(

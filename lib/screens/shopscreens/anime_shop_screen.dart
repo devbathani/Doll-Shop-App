@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:insta_like_button/insta_like_button.dart';
 import 'package:shop_app/model/anime_model.dart';
 import 'package:shop_app/model/shop_model.dart';
 
@@ -108,14 +109,18 @@ class _AnimeShopScreenState extends State<AnimeShopScreen> {
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                Container(
-                                  height: h * 0.12,
-                                  width: w * 0.15,
-                                  decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                      image: AssetImage(anime[index].image),
-                                      fit: BoxFit.fitHeight,
-                                    ),
+                                SizedBox(
+                                  height: h * 0.15,
+                                  width: w * 0.20,
+                                  child: InstaLikeButton(
+                                    onChanged: () {},
+                                    image: AssetImage(anime[index].image),
+                                    icon: Icons.favorite,
+                                    iconSize: w / 5,
+                                    curve: Curves.bounceOut,
+                                    iconColor: Colors.white.withOpacity(0.4),
+                                    duration: const Duration(milliseconds: 500),
+                                    imageBoxfit: BoxFit.fitHeight,
                                   ),
                                 ),
                                 Text(
