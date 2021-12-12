@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:shop_app/screens/drawerscreen.dart';
-import 'package:shop_app/screens/shopscreen.dart';
+import 'package:shop_app/screens/drawer_screen/drawerscreen.dart';
+import 'package:shop_app/screens/shopscreens/shopscreen.dart';
 
 class MainShopscreen extends StatefulWidget {
   const MainShopscreen({Key? key}) : super(key: key);

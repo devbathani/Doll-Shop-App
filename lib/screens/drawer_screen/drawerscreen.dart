@@ -5,7 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:shop_app/model/user_model.dart';
 import 'package:shop_app/transition/page_transition_left.dart';
 
-import 'loginscreen.dart';
+import '../authentication_screen/loginscreen.dart';
 
 class Drawerscreen extends StatefulWidget {
   const Drawerscreen({Key? key}) : super(key: key);

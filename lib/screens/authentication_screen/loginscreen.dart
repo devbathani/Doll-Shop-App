@@ -4,7 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:shop_app/provider/google_sigin_provider.dart';
-import 'package:shop_app/screens/signupscreen.dart';
+import 'package:shop_app/screens/authentication_screen/signupscreen.dart';
 import 'package:shop_app/transition/page_transition.dart';
 import 'package:shop_app/transition/page_transition_left.dart';
 

@@ -2,10 +2,10 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shop_app/model/shop_model.dart';
-import 'package:shop_app/screens/anime_shop_screen.dart';
-import 'package:shop_app/screens/cartscreen.dart';
-import 'package:shop_app/screens/moneyheist_shop_screen.dart';
-import 'package:shop_app/screens/squidgame_shop_screnn.dart';
+import 'package:shop_app/screens/shopscreens/anime_shop_screen.dart';
+import 'package:shop_app/screens/drawer_screen/cartscreen.dart';
+import 'package:shop_app/screens/shopscreens/moneyheist_shop_screen.dart';
+import 'package:shop_app/screens/shopscreens/squidgame_shop_screnn.dart';
 import 'package:shop_app/transition/page_transition_down.dart';
 
 class Shopscreen extends StatefulWidget {
@@ -198,12 +198,20 @@ class _ShopscreenState extends State<Shopscreen>
                                                     child: _model.title.compareTo(
                                                                 'Anime Dolls') ==
                                                             0
-                                                        ?  AnimeShopScreen(model: shopmodel,)
+                                                        ? AnimeShopScreen(
+                                                            model: shopmodel,
+                                                          )
                                                         : _model.title.compareTo(
                                                                     'Squid Game Dolls') ==
                                                                 0
-                                                            ?  SquidgameShopscreen(model: shopmodel,)
-                                                            :  MoneyheistShopscreen(model: shopmodel,),
+                                                            ? SquidgameShopscreen(
+                                                                model:
+                                                                    shopmodel,
+                                                              )
+                                                            : MoneyheistShopscreen(
+                                                                model:
+                                                                    shopmodel,
+                                                              ),
                                                   ),
                                                 );
                                               },

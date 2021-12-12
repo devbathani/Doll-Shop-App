@@ -3,9 +3,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:shop_app/screens/homescreen.dart';
+import 'package:shop_app/screens/authentication_screen/homescreen.dart';
 import 'package:shop_app/model/user_model.dart';
-import 'package:shop_app/screens/loginscreen.dart';
+import 'package:shop_app/screens/authentication_screen/loginscreen.dart';
 import 'package:shop_app/transition/page_transition.dart';
 import 'package:shop_app/transition/page_transition_left.dart';
 

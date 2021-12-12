@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop_app/provider/get_user.dart';
 import 'package:shop_app/provider/google_sigin_provider.dart';
-import 'package:shop_app/screens/homescreen.dart';
+import 'package:shop_app/screens/authentication_screen/homescreen.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 Future main() async {

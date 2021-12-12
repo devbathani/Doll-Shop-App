@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:shop_app/screens/loginscreen.dart';
-import 'package:shop_app/screens/mainshopscreen.dart';
-import 'package:shop_app/screens/shopscreen.dart';
+import 'package:shop_app/screens/authentication_screen/loginscreen.dart';
+import 'package:shop_app/screens/shopscreens/mainshopscreen.dart';
+import 'package:shop_app/screens/shopscreens/shopscreen.dart';
 
 class Homescreen extends StatefulWidget {
   const Homescreen({Key? key}) : super(key: key);
