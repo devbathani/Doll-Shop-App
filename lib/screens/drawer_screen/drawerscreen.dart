@@ -3,6 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shop_app/model/user_model.dart';
+import 'package:shop_app/screens/favourite_screen/favourite_screen.dart';
+import 'package:shop_app/transition/page_transition.dart';
 import 'package:shop_app/transition/page_transition_left.dart';
 
 import '../authentication_screen/loginscreen.dart';
@@ -145,36 +147,46 @@ class _DrawerscreenState extends State<Drawerscreen> {
               SizedBox(
                 height: h * 0.03,
               ),
-              Container(
-                height: h * 0.06,
-                width: w * 0.45,
-                decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.3),
-                  borderRadius: BorderRadius.circular(w / 60),
-                ),
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: w * 0.03),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Icon(
-                        Icons.star,
-                        color: Colors.white,
-                        size: w / 16.5,
-                      ),
-                      SizedBox(
-                        width: w * 0.05,
-                      ),
-                      Text(
-                        "Favourites",
-                        style: GoogleFonts.poppins(
-                          textStyle: TextStyle(
-                              color: Colors.white,
-                              fontSize: w / 20,
-                              fontWeight: FontWeight.bold),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    CustomPageTransition(
+                      child: const FavouriteScreen(),
+                    ),
+                  );
+                },
+                child: Container(
+                  height: h * 0.06,
+                  width: w * 0.45,
+                  decoration: BoxDecoration(
+                    color: Colors.white.withOpacity(0.3),
+                    borderRadius: BorderRadius.circular(w / 60),
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: w * 0.03),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Icon(
+                          Icons.star,
+                          color: Colors.white,
+                          size: w / 16.5,
                         ),
-                      ),
-                    ],
+                        SizedBox(
+                          width: w * 0.05,
+                        ),
+                        Text(
+                          "Favourites",
+                          style: GoogleFonts.poppins(
+                            textStyle: TextStyle(
+                                color: Colors.white,
+                                fontSize: w / 20,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
