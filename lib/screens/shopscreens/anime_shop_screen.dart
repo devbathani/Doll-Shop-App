@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:insta_like_button/insta_like_button.dart';
+import 'package:provider/provider.dart';
 import 'package:shop_app/model/anime_model.dart';
 import 'package:shop_app/model/shop_model.dart';
+import 'package:shop_app/provider/favourites_list_provider.dart';
 
 class AnimeShopScreen extends StatefulWidget {
   final List<ShopModel> model;
@@ -113,7 +115,12 @@ class _AnimeShopScreenState extends State<AnimeShopScreen> {
                                   height: h * 0.15,
                                   width: w * 0.20,
                                   child: InstaLikeButton(
-                                    onChanged: () {},
+                                    onChanged: () {
+                                      final provider =
+                                          Provider.of<Favouriteslist>(context,
+                                              listen: false);
+                                      provider.additemsinlist();
+                                    },
                                     image: AssetImage(anime[index].image),
                                     icon: Icons.favorite,
                                     iconSize: w / 5,

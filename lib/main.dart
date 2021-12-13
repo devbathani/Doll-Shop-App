@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shop_app/provider/favourites_list_provider.dart';
 import 'package:shop_app/provider/get_user.dart';
 import 'package:shop_app/provider/google_sigin_provider.dart';
 import 'package:shop_app/screens/authentication_screen/homescreen.dart';
@@ -24,6 +25,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider<GetUserProvider>(
           create: (context) => GetUserProvider()..getUser(),
+        ),
+        ChangeNotifierProvider<Favouriteslist>(
+          create: (context) => Favouriteslist(),
         ),
       ],
       child: MaterialApp(
