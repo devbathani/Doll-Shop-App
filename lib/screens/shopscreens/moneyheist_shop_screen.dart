@@ -6,7 +6,6 @@ import 'package:shop_app/model/shop_model.dart';
 import 'package:insta_like_button/insta_like_button.dart';
 import 'package:shop_app/provider/favourites_list_provider.dart';
 import 'package:shop_app/screens/shopscreens/mainshopscreen.dart';
-import 'package:shop_app/screens/shopscreens/shopscreen.dart';
 import 'package:shop_app/transition/page_transition_left.dart';
 
 class MoneyheistShopscreen extends StatefulWidget {

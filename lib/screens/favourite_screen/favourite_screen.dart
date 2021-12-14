@@ -1,7 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:shop_app/model/favourites_model.dart';
 import 'package:shop_app/provider/favourites_list_provider.dart';
+import 'package:hive/hive.dart';
+import 'package:shop_app/screens/favourite_screen/boxes.dart';
 
 class FavouriteScreen extends StatefulWidget {
   const FavouriteScreen({Key? key}) : super(key: key);
@@ -11,12 +16,26 @@ class FavouriteScreen extends StatefulWidget {
 }
 
 class _FavouriteScreenState extends State<FavouriteScreen> {
+  Future addItem(String title, String image) async {
+    final List<Favouriteslist> item = [];
+
+    final box = Boxes.getItem();
+    box.add(item);
+  }
+
+  @override
+  void dispose() {
+    Hive.close();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     var h = MediaQuery.of(context).size.height;
     var w = MediaQuery.of(context).size.width;
-    return Scaffold(
-      body: Container(
+
+    Widget builditem(List<List<Favouriteslist>> item) {
+      return Container(
         height: double.infinity,
         width: double.infinity,
         decoration: const BoxDecoration(
@@ -50,65 +69,57 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                   height: h * 0.02,
                 ),
                 SizedBox(
-                  height: h * 0.77,
-                  child: Consumer<Favouriteslist>(
-                    builder: (context, value, child) {
+                  height: h * 0.76,
+                  child: GridView.builder(
+                    itemCount: item.length,
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      childAspectRatio: 0.95,
+                    ),
+                    itemBuilder: (context, index) {
                       return Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: GridView.builder(
-                          itemCount: value.favourites.length,
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            childAspectRatio: 0.95,
+                        padding: EdgeInsets.symmetric(
+                          vertical: h * 0.01,
+                          horizontal: w * 0.02,
+                        ),
+                        child: Container(
+                          height: h * 0.50,
+                          width: w * 0.45,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(w / 25),
+                            color: Colors.white.withOpacity(0.35),
                           ),
-                          itemBuilder: (context, index) {
-                            return Padding(
-                              padding: EdgeInsets.symmetric(
-                                vertical: h * 0.01,
-                                horizontal: w * 0.02,
-                              ),
-                              child: Container(
-                                height: h * 0.50,
-                                width: w * 0.45,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(w / 25),
-                                  color: Colors.white.withOpacity(0.35),
-                                ),
-                                child: Padding(
-                                  padding:
-                                      EdgeInsets.symmetric(vertical: h * 0.01),
-                                  child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      Container(
-                                        height: h * 0.15,
-                                        width: w * 0.20,
-                                        decoration: BoxDecoration(
-                                          image: DecorationImage(
-                                            image: AssetImage(value
-                                                .favourites[index].getimage),
-                                            fit: BoxFit.fitHeight,
-                                          ),
-                                        ),
-                                      ),
-                                      Text(
-                                        value.favourites[index].gettitle,
-                                        style: GoogleFonts.poppins(
-                                          textStyle: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: w / 20,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(vertical: h * 0.01),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Container(
+                                  height: h * 0.15,
+                                  width: w * 0.20,
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                      image: AssetImage(item[index][index]
+                                          .favourites[index]
+                                          .image),
+                                      fit: BoxFit.fitHeight,
+                                    ),
+                                  ),
+                                ), 
+                                Text(
+                                  item[index][index].favourites[index].title,
+                                  style: GoogleFonts.poppins(
+                                    textStyle: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: w / 20,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
                                 ),
-                              ),
-                            );
-                          },
+                              ],
+                            ),
+                          ),
                         ),
                       );
                     },
@@ -118,6 +129,17 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
             ),
           ),
         ),
+      );
+    }
+
+    return Scaffold(
+      body: ValueListenableBuilder<Box<List<Favouriteslist>>>(
+        valueListenable: Boxes.getItem().listenable(),
+        builder: (context, box, _) {
+          final item = box.values.toList().cast<List<Favouriteslist>>();
+
+          return builditem(item);
+        },
       ),
     );
   }

@@ -49,6 +49,8 @@ class _AnimeShopScreenState extends State<AnimeShopScreen> {
     ),
   ];
 
+  
+
   @override
   Widget build(BuildContext context) {
     var h = MediaQuery.of(context).size.height;
@@ -152,6 +154,7 @@ class _AnimeShopScreenState extends State<AnimeShopScreen> {
                                         anime[index].name,
                                         anime[index].image,
                                       );
+
                                     },
                                     image: AssetImage(anime[index].image),
                                     icon: Icons.favorite,
