@@ -5,6 +5,9 @@ import 'package:provider/provider.dart';
 import 'package:shop_app/model/anime_model.dart';
 import 'package:shop_app/model/shop_model.dart';
 import 'package:shop_app/provider/favourites_list_provider.dart';
+import 'package:shop_app/transition/page_transition_left.dart';
+
+import 'mainshopscreen.dart';
 
 class AnimeShopScreen extends StatefulWidget {
   final List<ShopModel> model;
@@ -71,14 +74,40 @@ class _AnimeShopScreenState extends State<AnimeShopScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Text(
-                  "Anime Dolls",
-                  style: GoogleFonts.poppins(
-                    textStyle: TextStyle(
-                      color: Colors.white,
-                      fontSize: w / 13,
-                      fontWeight: FontWeight.bold,
-                    ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: w * 0.01),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      IconButton(
+                        onPressed: () {
+                          Navigator.pushReplacement(
+                            context,
+                            CustomPageTransitionLeft(
+                              child: const MainShopscreen(),
+                            ),
+                          );
+                        },
+                        icon: Icon(
+                          Icons.arrow_back_ios_new_rounded,
+                          size: w / 25,
+                          color: Colors.white,
+                        ),
+                      ),
+                      SizedBox(
+                        width: w * 0.13,
+                      ),
+                      Text(
+                        "Anime Dolls",
+                        style: GoogleFonts.poppins(
+                          textStyle: TextStyle(
+                            color: Colors.white,
+                            fontSize: w / 13,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 SizedBox(
@@ -119,7 +148,10 @@ class _AnimeShopScreenState extends State<AnimeShopScreen> {
                                       final provider =
                                           Provider.of<Favouriteslist>(context,
                                               listen: false);
-                                      provider.additemsinlist();
+                                      provider.additemsinlist(
+                                        anime[index].name,
+                                        anime[index].image,
+                                      );
                                     },
                                     image: AssetImage(anime[index].image),
                                     icon: Icons.favorite,

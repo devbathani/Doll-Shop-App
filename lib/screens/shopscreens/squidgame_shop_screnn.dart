@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:insta_like_button/insta_like_button.dart';
+import 'package:provider/provider.dart';
 import 'package:shop_app/model/shop_model.dart';
 import 'package:shop_app/model/squidgame_model.dart';
+import 'package:shop_app/provider/favourites_list_provider.dart';
+import 'package:shop_app/transition/page_transition_left.dart';
+
+import 'mainshopscreen.dart';
 
 class SquidgameShopscreen extends StatefulWidget {
   final List<ShopModel> model;
@@ -60,13 +65,39 @@ class _SquidgameShopscreenState extends State<SquidgameShopscreen> {
             padding: EdgeInsets.symmetric(vertical: h * 0.07),
             child: Column(
               children: [
-                Text(
-                  "Squid Game Dolls",
-                  style: GoogleFonts.poppins(
-                    textStyle: TextStyle(
-                        color: Colors.white,
-                        fontSize: w / 13,
-                        fontWeight: FontWeight.bold),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: w * 0.01),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      IconButton(
+                        onPressed: () {
+                          Navigator.pushReplacement(
+                            context,
+                            CustomPageTransitionLeft(
+                              child: const MainShopscreen(),
+                            ),
+                          );
+                        },
+                        icon: Icon(
+                          Icons.arrow_back_ios_new_rounded,
+                          size: w / 25,
+                          color: Colors.white,
+                        ),
+                      ),
+                      SizedBox(
+                        width: w * 0.05,
+                      ),
+                      Text(
+                        "Squid Game Dolls",
+                        style: GoogleFonts.poppins(
+                          textStyle: TextStyle(
+                              color: Colors.white,
+                              fontSize: w / 13,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 SizedBox(
@@ -104,7 +135,15 @@ class _SquidgameShopscreenState extends State<SquidgameShopscreen> {
                                   height: h * 0.15,
                                   width: w * 0.20,
                                   child: InstaLikeButton(
-                                    onChanged: () {},
+                                    onChanged: () {
+                                      final provider =
+                                          Provider.of<Favouriteslist>(context,
+                                              listen: false);
+                                      provider.additemsinlist(
+                                        squidgame[index].name,
+                                        squidgame[index].image,
+                                      );
+                                    },
                                     image: AssetImage(squidgame[index].image),
                                     icon: Icons.favorite,
                                     iconSize: w / 5,

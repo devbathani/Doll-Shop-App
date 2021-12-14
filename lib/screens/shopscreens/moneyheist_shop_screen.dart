@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:shop_app/model/moneyheist_model.dart';
 import 'package:shop_app/model/shop_model.dart';
 import 'package:insta_like_button/insta_like_button.dart';
+import 'package:shop_app/provider/favourites_list_provider.dart';
+import 'package:shop_app/screens/shopscreens/mainshopscreen.dart';
+import 'package:shop_app/screens/shopscreens/shopscreen.dart';
+import 'package:shop_app/transition/page_transition_left.dart';
 
 class MoneyheistShopscreen extends StatefulWidget {
   final List<ShopModel> model;
@@ -69,13 +74,40 @@ class _MoneyheistShopscreenState extends State<MoneyheistShopscreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Text(
-                  "Money Heist Dolls",
-                  style: GoogleFonts.poppins(
-                    textStyle: TextStyle(
-                        color: Colors.white,
-                        fontSize: w / 13,
-                        fontWeight: FontWeight.bold),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: w * 0.01),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      IconButton(
+                        onPressed: () {
+                          Navigator.pushReplacement(
+                            context,
+                            CustomPageTransitionLeft(
+                              child: const MainShopscreen(),
+                            ),
+                          );
+                        },
+                        icon: Icon(
+                          Icons.arrow_back_ios_new_rounded,
+                          size: w / 25,
+                          color: Colors.white,
+                        ),
+                      ),
+                      SizedBox(
+                        width: w * 0.05,
+                      ),
+                      Text(
+                        "Money Heist Dolls",
+                        style: GoogleFonts.poppins(
+                          textStyle: TextStyle(
+                            color: Colors.white,
+                            fontSize: w / 13,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 SizedBox(
@@ -113,7 +145,15 @@ class _MoneyheistShopscreenState extends State<MoneyheistShopscreen> {
                                   height: h * 0.15,
                                   width: w * 0.20,
                                   child: InstaLikeButton(
-                                    onChanged: () {},
+                                    onChanged: () {
+                                      final provider =
+                                          Provider.of<Favouriteslist>(context,
+                                              listen: false);
+                                      provider.additemsinlist(
+                                        moneyheist[index].name,
+                                        moneyheist[index].image,
+                                      );
+                                    },
                                     image: AssetImage(moneyheist[index].image),
                                     icon: Icons.favorite,
                                     iconSize: w / 5,
