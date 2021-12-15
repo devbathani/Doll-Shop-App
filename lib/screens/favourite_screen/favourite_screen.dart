@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:shop_app/model/favourites_model.dart';
 import 'package:shop_app/provider/favourites_list_provider.dart';
 import 'package:hive/hive.dart';
 import 'package:shop_app/screens/favourite_screen/boxes.dart';
@@ -14,10 +15,14 @@ class FavouriteScreen extends StatefulWidget {
 
 class _FavouriteScreenState extends State<FavouriteScreen> {
   Future addItem(String title, String image) async {
-    final List<Favouriteslist> item = [];
+    final List<Favourite> fav = [
+      Favourite(title: title, image: image),
+    ];
 
     final box = Boxes.getItem();
-    box.add(item);
+    box.add(fav);
+    box.get('favourites');
+    box.put('favourites', fav);
   }
 
   @override
@@ -31,7 +36,7 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
     var h = MediaQuery.of(context).size.height;
     var w = MediaQuery.of(context).size.width;
 
-    Widget builditem(List<Favouriteslist> item) {
+    Widget builditem(List<Favourite> item) {
       return Container(
         height: double.infinity,
         width: double.infinity,
@@ -98,13 +103,13 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                                   decoration: BoxDecoration(
                                     image: DecorationImage(
                                       image: AssetImage(
-                                          item[index].favourites[index].image),
+                                          item[index].getimage),
                                       fit: BoxFit.fitHeight,
                                     ),
                                   ),
                                 ),
                                 Text(
-                                  item[index].favourites[index].title,
+                                  item[index].gettitle,
                                   style: GoogleFonts.poppins(
                                     textStyle: TextStyle(
                                       color: Colors.white,
@@ -129,11 +134,11 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
     }
 
     return Scaffold(
-      body: ValueListenableBuilder<Box<List<Favouriteslist>>>(
+      body: ValueListenableBuilder<Box<List<Favourite>>>(
         valueListenable: Boxes.getItem().listenable(),
         builder: (context, box, _) {
-          final item = box.values.toList().cast<Favouriteslist>();
-
+          final item = box.values.toList().cast<Favourite>();
+          print(item);
           return builditem(item);
         },
       ),
