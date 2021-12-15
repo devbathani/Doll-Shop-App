@@ -1,9 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:provider/provider.dart';
-import 'package:shop_app/model/favourites_model.dart';
 import 'package:shop_app/provider/favourites_list_provider.dart';
 import 'package:hive/hive.dart';
 import 'package:shop_app/screens/favourite_screen/boxes.dart';
@@ -25,7 +22,7 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
 
   @override
   void dispose() {
-    Hive.close();
+    Hive.box('favourites').close();
     super.dispose();
   }
 
@@ -34,7 +31,7 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
     var h = MediaQuery.of(context).size.height;
     var w = MediaQuery.of(context).size.width;
 
-    Widget builditem(List<List<Favouriteslist>> item) {
+    Widget builditem(List<Favouriteslist> item) {
       return Container(
         height: double.infinity,
         width: double.infinity,
@@ -100,15 +97,14 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                                   width: w * 0.20,
                                   decoration: BoxDecoration(
                                     image: DecorationImage(
-                                      image: AssetImage(item[index][index]
-                                          .favourites[index]
-                                          .image),
+                                      image: AssetImage(
+                                          item[index].favourites[index].image),
                                       fit: BoxFit.fitHeight,
                                     ),
                                   ),
-                                ), 
+                                ),
                                 Text(
-                                  item[index][index].favourites[index].title,
+                                  item[index].favourites[index].title,
                                   style: GoogleFonts.poppins(
                                     textStyle: TextStyle(
                                       color: Colors.white,
@@ -136,7 +132,7 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
       body: ValueListenableBuilder<Box<List<Favouriteslist>>>(
         valueListenable: Boxes.getItem().listenable(),
         builder: (context, box, _) {
-          final item = box.values.toList().cast<List<Favouriteslist>>();
+          final item = box.values.toList().cast<Favouriteslist>();
 
           return builditem(item);
         },
