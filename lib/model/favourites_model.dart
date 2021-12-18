@@ -1,8 +1,8 @@
 import 'package:hive/hive.dart';
 part 'favourites_model.g.dart';
 
-@HiveType(typeId: 1)
-class Favourite extends HiveObject {
+@HiveType(typeId: 0)
+class Favourite {
   @HiveField(0)
   String title;
 

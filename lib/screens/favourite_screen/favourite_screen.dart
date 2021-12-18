@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+import 'package:hive/hive.dart';
+import 'package:provider/provider.dart';
 import 'package:shop_app/model/favourites_model.dart';
 import 'package:shop_app/provider/favourites_list_provider.dart';
-import 'package:hive/hive.dart';
 import 'package:shop_app/screens/favourite_screen/boxes.dart';
 
 class FavouriteScreen extends StatefulWidget {
@@ -14,30 +14,15 @@ class FavouriteScreen extends StatefulWidget {
 }
 
 class _FavouriteScreenState extends State<FavouriteScreen> {
-  Future addItem(String title, String image) async {
-    final List<Favourite> fav = [
-      Favourite(title: title, image: image),
-    ];
-
-    final box = Boxes.getItem();
-    box.add(fav);
-    box.get('favourites');
-    box.put('favourites', fav);
-  }
-
-  @override
-  void dispose() {
-    Hive.box('favourites').close();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     var h = MediaQuery.of(context).size.height;
     var w = MediaQuery.of(context).size.width;
+    final itembox = Hive.box<List<Favouriteslist>>('favourites');
+    final item = itembox.get('favourties');
 
-    Widget builditem(List<Favourite> item) {
-      return Container(
+    return Scaffold(
+      body: Container(
         height: double.infinity,
         width: double.infinity,
         decoration: const BoxDecoration(
@@ -73,7 +58,7 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                 SizedBox(
                   height: h * 0.76,
                   child: GridView.builder(
-                    itemCount: item.length,
+                    itemCount: item!.length,
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
@@ -103,13 +88,16 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                                   decoration: BoxDecoration(
                                     image: DecorationImage(
                                       image: AssetImage(
-                                          item[index].getimage),
+                                        item[index]
+                                            .favouriteList[index]
+                                            .getimage,
+                                      ),
                                       fit: BoxFit.fitHeight,
                                     ),
                                   ),
                                 ),
                                 Text(
-                                  item[index].gettitle,
+                                  item[index].favouriteList[index].gettitle,
                                   style: GoogleFonts.poppins(
                                     textStyle: TextStyle(
                                       color: Colors.white,
@@ -130,17 +118,6 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
             ),
           ),
         ),
-      );
-    }
-
-    return Scaffold(
-      body: ValueListenableBuilder<Box<List<Favourite>>>(
-        valueListenable: Boxes.getItem().listenable(),
-        builder: (context, box, _) {
-          final item = box.values.toList().cast<Favourite>();
-          print(item);
-          return builditem(item);
-        },
       ),
     );
   }

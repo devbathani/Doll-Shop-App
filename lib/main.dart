@@ -1,8 +1,9 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:path_provider/path_provider.dart';
+import 'package:path_provider/path_provider.dart' as pathProvider;
 import 'package:provider/provider.dart';
+import 'package:shop_app/model/favourites_model.dart';
 import 'package:shop_app/provider/favourites_list_provider.dart';
 import 'package:shop_app/provider/get_user.dart';
 import 'package:shop_app/provider/google_sigin_provider.dart';
@@ -11,16 +12,12 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-import 'model/favourites_model.dart';
-
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  Hive.registerAdapter(FavouriteAdapter());
   await Firebase.initializeApp();
-  Directory doc = await getApplicationDocumentsDirectory();
+  Directory doc = await pathProvider.getApplicationDocumentsDirectory();
   Hive.init(doc.path);
-  //await Hive.initFlutter();
-  await Hive.openBox<List<Favourite>>('favourites');
+  Hive.registerAdapter(FavouriteAdapter());
   runApp(const MyApp());
 }
 
