@@ -178,13 +178,11 @@ class _AnimeShopScreenState extends State<AnimeShopScreen> {
                                       LikeButton(
                                         isLiked: isLiked,
                                         likeCount: likeCount,
-                                        onTap: (isLiked) async {
-                                          setState(() {
-                                            this.isLiked = !isLiked;
-                                            likeCount += this.isLiked ? 1 : -1;
-                                          });
-                                          return !isLiked;
-                                        },
+                                        // onTap: (isLiked) async {
+                                        //   this.isLiked = !isLiked;
+                                        //   likeCount += this.isLiked ? 1 : -1;
+                                        //   return !isLiked;
+                                        // },
                                         likeBuilder: (bool isLiked) {
                                           return Icon(
                                             Icons.favorite,

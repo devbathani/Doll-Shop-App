@@ -140,7 +140,7 @@ class _ShopscreenState extends State<Shopscreen>
                           padding: EdgeInsets.symmetric(horizontal: w * 0.03),
                           child: FractionallySizedBox(
                             heightFactor: h * 0.00125,
-                            widthFactor: w * 0.0025,
+                            widthFactor: w * 0.00315,
                             child: Container(
                               margin:
                                   EdgeInsets.symmetric(horizontal: w * 0.08),
