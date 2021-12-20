@@ -120,7 +120,6 @@ class _ShopscreenState extends State<Shopscreen>
                   padding: EdgeInsets.symmetric(vertical: h * 0.15),
                   child: CarouselSlider(
                     options: CarouselOptions(
-                      aspectRatio: 16 / 9,
                       enableInfiniteScroll: true,
                       viewportFraction: w * 0.0026,
                       height: h * 0.65,
@@ -141,7 +140,7 @@ class _ShopscreenState extends State<Shopscreen>
                           padding: EdgeInsets.symmetric(horizontal: w * 0.03),
                           child: FractionallySizedBox(
                             heightFactor: h * 0.00125,
-                            widthFactor: w * 0.00315,
+                            widthFactor: w * 0.0025,
                             child: Container(
                               margin:
                                   EdgeInsets.symmetric(horizontal: w * 0.08),

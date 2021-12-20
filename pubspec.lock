@@ -422,6 +422,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.4.0"
+  like_button:
+    dependency: "direct main"
+    description:
+      name: like_button
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.4"
   lints:
     dependency: transitive
     description:
@@ -457,13 +464,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.1"
-  motion_toast:
-    dependency: "direct main"
-    description:
-      name: motion_toast
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.6.0"
   nested:
     dependency: transitive
     description:
