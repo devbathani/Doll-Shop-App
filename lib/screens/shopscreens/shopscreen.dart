@@ -120,6 +120,7 @@ class _ShopscreenState extends State<Shopscreen>
                   padding: EdgeInsets.symmetric(vertical: h * 0.15),
                   child: CarouselSlider(
                     options: CarouselOptions(
+                      enlargeCenterPage: true,
                       enableInfiniteScroll: true,
                       viewportFraction: w * 0.0026,
                       height: h * 0.65,
@@ -139,7 +140,7 @@ class _ShopscreenState extends State<Shopscreen>
                         return Padding(
                           padding: EdgeInsets.symmetric(horizontal: w * 0.03),
                           child: FractionallySizedBox(
-                            heightFactor: h * 0.00125,
+                            heightFactor: h * 0.0013,
                             widthFactor: w * 0.00315,
                             child: Container(
                               margin:
@@ -161,12 +162,12 @@ class _ShopscreenState extends State<Shopscreen>
                                     child: Column(
                                       children: [
                                         SizedBox(
-                                          height: h * 0.28,
-                                          width: w * 0.36,
+                                          height: h * 0.25,
+                                          width: w * 0.33,
                                           child: Image.asset(
                                             model.image,
                                             fit: BoxFit.cover,
-                                            scale: h * 0.008,
+                                            scale: h * 0.009,
                                           ),
                                         ),
                                         SizedBox(
@@ -181,13 +182,13 @@ class _ShopscreenState extends State<Shopscreen>
                                               style: GoogleFonts.roboto(
                                                 textStyle: TextStyle(
                                                   color: Colors.white,
-                                                  fontSize: w / 13,
+                                                  fontSize: w / 14,
                                                   fontWeight: FontWeight.bold,
                                                 ),
                                               ),
                                             ),
                                             SizedBox(
-                                              height: h * 0.04,
+                                              height: h * 0.03,
                                             ),
                                             GestureDetector(
                                               onTap: () {
@@ -215,12 +216,13 @@ class _ShopscreenState extends State<Shopscreen>
                                                 );
                                               },
                                               child: Container(
-                                                height: h * 0.06,
+                                                height: h * 0.055,
                                                 width: w * 0.30,
                                                 decoration: BoxDecoration(
                                                   borderRadius:
                                                       BorderRadius.circular(
-                                                          w / 65),
+                                                    w / 65,
+                                                  ),
                                                   color: Colors.white
                                                       .withOpacity(0.4),
                                                 ),
